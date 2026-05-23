@@ -1,0 +1,1089 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<link href="https://fonts.googleapis.com/css2?family=Bangers&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:#0a0604;font-family:'Courier New',monospace;color:#e0e0e0;overflow:hidden;height:100vh;width:100vw}
+:root{--red:#ff3020;--or:#ff7020;--gr:#22cc66;--bl:#3399ff;--ye:#ffcc00;--bd:#1e2535}
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+@keyframes slideUp{from{opacity:0;transform:translateY(30px)}to{opacity:1;transform:translateY(0)}}
+@keyframes bgPulse{0%,100%{opacity:.6}50%{opacity:1}}
+@keyframes bubbleBob{from{transform:translateY(0)}to{transform:translateY(-4px)}}
+
+/* HOME */
+#home{position:absolute;inset:0;background:linear-gradient(135deg,#0a0e1a,#1a0808 50%,#0a0e1a);display:flex;flex-direction:column;align-items:center;justify-content:center;z-index:20}
+#home::before{content:'';position:absolute;inset:0;background:radial-gradient(circle at 20% 30%,#ff502033,transparent 50%),radial-gradient(circle at 80% 70%,#ff302033,transparent 50%);pointer-events:none;animation:bgPulse 8s ease-in-out infinite}
+.hc{position:relative;z-index:2;text-align:center;animation:slideUp .8s}
+.hc svg{width:120px;height:120px;filter:drop-shadow(0 0 20px #ff5020aa);margin-bottom:20px}
+.htag{font-size:11px;letter-spacing:6px;color:var(--or);margin-bottom:8px;font-weight:700}
+.htitle{font-family:'Arial Black',sans-serif;font-size:64px;font-weight:900;color:#fff;letter-spacing:6px;text-shadow:0 0 30px #ff502044;line-height:1;margin-bottom:6px}
+.hsub{font-size:13px;letter-spacing:5px;color:#aaa;margin-bottom:8px}
+.hreg{font-size:10px;letter-spacing:3px;color:#666;margin-bottom:50px}
+.hstats{display:flex;gap:30px;justify-content:center;margin-bottom:50px}
+.hstat{text-align:center}
+.hstat-n{font-size:24px;font-weight:900;color:var(--or)}
+.hstat-l{font-size:8px;letter-spacing:2px;color:#777;margin-top:2px}
+.playbtn{background:linear-gradient(135deg,var(--red),var(--or));border:none;color:#fff;padding:16px 70px;font-family:'Arial Black',monospace;font-size:18px;font-weight:900;letter-spacing:6px;cursor:pointer;border-radius:6px;box-shadow:0 6px 25px #ff502066;transition:all .25s;position:relative;overflow:hidden}
+.playbtn:hover{transform:translateY(-3px);box-shadow:0 10px 30px #ff5020aa}
+.playbtn::after{content:'';position:absolute;top:0;left:-100%;width:100%;height:100%;background:linear-gradient(90deg,transparent,#ffffff44,transparent);transition:left .5s}
+.playbtn:hover::after{left:100%}
+#home .foot{position:absolute;bottom:20px;font-size:8px;letter-spacing:3px;color:#444;z-index:2}
+#home .ver{position:absolute;top:14px;right:18px;font-size:9px;letter-spacing:2px;color:#555;z-index:2}
+
+/* SELECT */
+#sel{position:absolute;inset:0;background:#0a0604;display:none;flex-direction:column;align-items:center;justify-content:center;z-index:10;padding:40px 20px;overflow-y:auto}
+#sel::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at center,#1a0a04,#000 70%);pointer-events:none}
+.sc{position:relative;z-index:2;width:100%;max-width:1050px;display:flex;flex-direction:column;align-items:center}
+.bk{position:absolute;top:18px;left:22px;cursor:pointer;color:#8a7060;font-size:11px;letter-spacing:.2em;background:none;border:none;font-family:inherit;z-index:5;transition:color .2s}
+.bk:hover{color:#e85a1a}
+.sv{position:absolute;top:18px;right:22px;font-size:11px;letter-spacing:.2em;color:#5a4a3a;z-index:5}
+.sh{text-align:center;margin-bottom:56px}
+.sh h1{font-size:11px;letter-spacing:.25em;color:#e85a1a;margin-bottom:14px}
+.sh h2{font-size:48px;font-weight:700;color:#fff;letter-spacing:.15em;line-height:1.1}
+.sh p{font-size:11px;letter-spacing:.25em;color:#8a7060;margin-top:14px}
+.cg{display:grid;grid-template-columns:repeat(4,1fr);gap:20px;width:100%;margin-bottom:52px}
+.cc{background:#140a06;border:1px solid #2a1a10;padding:30px 18px;cursor:pointer;text-align:center;transition:all .2s;display:flex;flex-direction:column;align-items:center}
+.cc:hover{border-color:#e85a1a;box-shadow:0 0 18px rgba(220,80,20,.4);transform:translateY(-3px)}
+.cc.sel{border-color:#e85a1a;box-shadow:0 0 22px rgba(220,80,20,.5);background:#1a0c06}
+.cc .ic{font-size:40px;margin-bottom:16px}
+.cc h3{font-size:12px;color:#fff;letter-spacing:.18em;margin-bottom:16px;font-weight:700}
+.tg{font-size:18px;font-weight:700;margin-bottom:8px}
+.tg-sub{font-size:8px;letter-spacing:.2em;color:#8a7060;margin-bottom:16px}
+.tg-r{color:#cc2200}
+.tg-o{color:#cc7700}
+.cc p{font-size:10px;color:#8a7060;line-height:1.7;margin-top:auto;letter-spacing:.06em}
+#lb{background:linear-gradient(135deg,#e85a1a,#cc3300);border:none;color:#fff;padding:16px 60px;font-family:inherit;font-size:14px;font-weight:700;letter-spacing:.25em;cursor:pointer;transition:all .2s}
+#lb:disabled{background:#1a1410;color:#3a2a20;cursor:not-allowed}
+#lb:not(:disabled):hover{filter:brightness(1.15);box-shadow:0 0 22px rgba(220,80,20,.5)}
+.sf{position:absolute;bottom:18px;font-size:9px;letter-spacing:.25em;color:#3a2a20;z-index:2}
+
+/* SIM */
+#sim{position:absolute;inset:0;display:none;flex-direction:row}
+#v3{width:52%;height:100%;position:relative;border-right:1px solid var(--bd);flex-shrink:0}
+#cv{display:block;width:100%;height:100%}
+#l3{position:absolute;top:8px;left:10px;font-size:9px;color:var(--or);letter-spacing:2px;pointer-events:none}
+#p3{position:absolute;top:24px;left:10px;font-size:10px;color:#ffcc88;pointer-events:none}
+#ht{position:absolute;bottom:8px;left:50%;transform:translateX(-50%);font-size:8px;color:#333;pointer-events:none;white-space:nowrap}
+#pp{position:absolute;bottom:28px;left:8px;right:8px;background:#07090dee;border:1px solid #ff502044;border-radius:4px;padding:7px 10px;font-size:9px;color:#ffcc88;display:none;pointer-events:none;line-height:1.6}
+#md{flex:1;display:flex;flex-direction:column;overflow:hidden}
+#tb{background:#0a0d14;border-bottom:1px solid var(--bd);padding:5px 8px;display:flex;align-items:center;gap:7px;flex-shrink:0}
+#tm{font-size:17px;font-weight:700;color:var(--red);letter-spacing:2px;min-width:52px}
+#pw2{flex:1;height:3px;background:var(--bd);border-radius:2px}
+#pf{height:100%;background:linear-gradient(90deg,var(--red),var(--or));border-radius:2px;width:0%}
+.sb{background:#0d1018;border:1px solid #333;color:#777;padding:2px 6px;font-size:8px;cursor:pointer;border-radius:2px;font-family:monospace}
+.sb.on{border-color:var(--red);color:var(--or)}
+.ctrl{background:#0d1018;border:1px solid #333;color:#aaa;padding:3px 9px;font-family:monospace;font-size:9px;cursor:pointer;border-radius:2px}
+.ctrl:hover{border-color:var(--red);color:#fff}
+#pr{display:flex;border-bottom:1px solid var(--bd);flex-shrink:0}
+.pi{flex:1;text-align:center;font-size:7px;padding:3px 1px;border-bottom:2px solid var(--bd);color:#444;transition:all .2s}
+.pi.dn{color:var(--gr);border-bottom-color:var(--gr)}
+.pi.ac{color:var(--or);border-bottom-color:var(--or);font-weight:700}
+#vi{padding:5px 6px;border-bottom:1px solid var(--bd);flex-shrink:0}
+.vg{display:grid;grid-template-columns:repeat(6,1fr);gap:3px}
+.vb{background:#0a0d14;border:1px solid var(--bd);border-radius:3px;padding:3px;text-align:center}
+.vl{font-size:7px;color:#555;margin-bottom:1px}
+.vv{font-size:12px;font-weight:700}
+.vu{font-size:6px;color:#555}
+.ok{color:var(--gr)}.wa{color:var(--ye)}.cr{color:var(--red)}
+#lo{flex:1;display:flex;overflow:hidden;min-height:0}
+#an{width:44%;border-right:1px solid var(--bd);display:flex;flex-direction:column;overflow:hidden}
+.hdr{background:#0a0d14;border-bottom:1px solid var(--bd);padding:4px 7px;font-size:7px;letter-spacing:2px;color:#555;flex-shrink:0;display:flex;justify-content:space-between}
+#sw{flex:1;display:flex;align-items:center;justify-content:center;padding:4px;overflow:hidden}
+#as{width:100%;height:100%;max-height:260px}
+.za{animation:zp 1.2s infinite}
+@keyframes zp{0%,100%{opacity:1}50%{opacity:.4}}
+#al2{padding:4px 6px;border-top:1px solid var(--bd);max-height:70px;overflow-y:auto;flex-shrink:0}
+#ma{padding:4px 6px;border-top:1px solid var(--bd);flex-shrink:0}
+.mr{display:flex;align-items:flex-start;gap:4px;padding:2px 0;border-bottom:1px solid #0f1420;font-size:8px}
+.mk{color:#555;width:14px;font-size:7px;flex-shrink:0}
+.mv{flex:1;color:#aaa;line-height:1.3;font-size:7px}
+.ms{font-size:6px;padding:1px 3px;border-radius:2px;flex-shrink:0}
+.mok{background:#0a2a15;color:var(--gr)}.mwa{background:#2a1a00;color:var(--ye)}.mcr{background:#2a0808;color:var(--red)}
+#lg{flex:1;display:flex;flex-direction:column;overflow:hidden}
+#ll{flex:1;overflow-y:auto;padding:5px 7px}
+.le{display:flex;gap:5px;margin-bottom:5px;font-size:8px;border-left:2px solid var(--bd);padding-left:5px;opacity:0;animation:fadeIn .4s forwards}
+.le.ac2{border-left-color:var(--or)}.le.dn2{border-left-color:var(--gr);opacity:.6}
+.lt{color:#444;flex-shrink:0;width:30px}
+.lw{font-size:6px;padding:1px 3px;border-radius:2px;flex-shrink:0}
+.wc{background:#1a0a00;color:var(--or)}.we{background:#001a2a;color:var(--bl)}.wm{background:#0a1a0a;color:var(--gr)}
+.lx{color:#ccc;line-height:1.5;flex:1}
+.lm{margin-top:2px;font-size:7px;background:#0a0d14;border:1px solid var(--bd);border-radius:2px;padding:2px 5px;color:#999}
+
+/* BUBBLES */
+.cbubble{position:absolute;font-family:'Bangers','Comic Sans MS',cursive;font-size:18px;letter-spacing:1px;color:#111;padding:10px 16px;text-align:center;line-height:1.15;pointer-events:none;opacity:0;transition:opacity .5s;z-index:50;min-width:90px;max-width:220px;animation:bubbleBob 1.6s ease-in-out infinite alternate}
+.cb-normal{background:#fff;border:3px solid #111;border-radius:22px;box-shadow:3px 4px 0 rgba(0,0,0,.6)}
+.cb-normal::after{content:'';position:absolute;bottom:-14px;left:24px;width:0;height:0;border-left:14px solid transparent;border-right:6px solid transparent;border-top:16px solid #111}
+.cb-normal::before{content:'';position:absolute;bottom:-9px;left:27px;width:0;height:0;border-left:9px solid transparent;border-right:4px solid transparent;border-top:11px solid #fff;z-index:1}
+.cb-shout{background:#fff;border:4px solid #cc1100;color:#cc1100;font-size:22px;font-weight:900;padding:14px 20px;box-shadow:4px 5px 0 rgba(180,30,0,.4)}
+.cb-shout-victim{background:#ffe0e0}
+.cb-thought{background:#fff;border:3px dotted #444;border-radius:50%;color:#444;font-style:italic;box-shadow:3px 4px 0 rgba(0,0,0,.4)}
+.cb-sad{color:#446688;font-style:italic}
+</style>
+</head>
+<body>
+
+<div id="home">
+  <div class="ver">v1.0 - SIMULATEUR</div>
+  <div class="hc">
+    <svg viewBox="0 0 100 110" xmlns="http://www.w3.org/2000/svg">
+      <defs><linearGradient id="sg2" x1="0%" y1="0%" x2="0%" y2="100%"><stop offset="0%" stop-color="#ff5020"/><stop offset="100%" stop-color="#cc1100"/></linearGradient></defs>
+      <path d="M50 5 L90 20 L90 60 Q90 90 50 105 Q10 90 10 60 L10 20 Z" fill="url(#sg2)" stroke="#fff" stroke-width="2"/>
+      <text x="50" y="58" text-anchor="middle" font-family="Arial Black,sans-serif" font-size="22" font-weight="900" fill="#fff">SP</text>
+      <text x="50" y="76" text-anchor="middle" font-family="Arial,sans-serif" font-size="10" font-weight="700" fill="#fff" letter-spacing="2">69</text>
+    </svg>
+    <div class="htag">SERVICE DEPARTEMENTAL - METROPOLE DE LYON</div>
+    <h1 class="htitle">SDMIS</h1>
+    <p class="hsub">SIMULATEUR D'INTERVENTION VSAV</p>
+    <p class="hreg">RHONE - METROPOLE DE LYON - FORMATION SAPEURS-POMPIERS</p>
+    <div class="hstats"><div class="hstat"><div class="hstat-n">4</div><div class="hstat-l">CAS CLINIQUES</div></div><div class="hstat"><div class="hstat-n">3D</div><div class="hstat-l">IMMERSIF</div></div><div class="hstat"><div class="hstat-n">PRO</div><div class="hstat-l">NIVEAU</div></div></div>
+    <button class="playbtn" onclick="goToSelect()">COMMENCER</button>
+  </div>
+  <div class="foot">SIMULATION OPERATIONNELLE - UTILISATION FORMATION UNIQUEMENT</div>
+</div>
+
+<div id="sel">
+  <button class="bk" onclick="backToHome()">RETOUR</button>
+  <div class="sv">v1.0 - SIMULATEUR</div>
+  <div class="sc">
+    <div class="sh">
+      <h1>CENTRE DE COORDINATION OPERATIONNELLE</h1>
+      <h2>INTERVENTION</h2>
+      <p>SELECTIONNEZ LE CAS CLINIQUE</p>
+    </div>
+    <div class="cg">
+      <div class="cc" id="cc-acr" onclick="sel('acr')"><div class="ic">&#10084;</div><h3>ARRET CARDIAQUE</h3><div class="tg tg-r">ROUGE</div><div class="tg-sub">PRIORITE ABSOLUE</div><p>ACR adulte 58 ans. RCP, defibrillation, RACS.</p></div>
+      <div class="cc" id="cc-trauma" onclick="sel('trauma')"><div class="ic">&#129460;</div><h3>TRAUMA GRAVE</h3><div class="tg tg-r">ROUGE P1</div><div class="tg-sub">PRIORITE HAUTE</div><p>Chute de 6m. Garrot, rachis, packaging.</p></div>
+      <div class="cc" id="cc-avp" onclick="sel('avp')"><div class="ic">&#128663;</div><h3>AVP INCARCERE</h3><div class="tg tg-o">ORANGE P2</div><div class="tg-sub">PRIORITE MOYENNE</div><p>Conducteur incarcere. Volet thoracique.</p></div>
+      <div class="cc" id="cc-oap" onclick="sel('oap')"><div class="ic">&#129723;</div><h3>DETRESSE RESPI</h3><div class="tg tg-o">ORANGE P2</div><div class="tg-sub">PRIORITE MOYENNE</div><p>OAP femme 72 ans. VNI, furosemide.</p></div>
+    </div>
+    <button id="lb" disabled onclick="launch()">SELECTIONNEZ UN CAS</button>
+  </div>
+  <div class="sf">SIMULATION OPERATIONNELLE - UTILISATION FORMATION UNIQUEMENT</div>
+</div>
+
+<div id="sim">
+  <div id="v3"><canvas id="cv"></canvas>
+    <div id="l3">SDMIS - SCENE 3D</div><div id="p3"></div>
+    <div id="pp"><div id="ppw"></div><div id="ppt"></div><div id="ppm" style="display:none"></div></div>
+    <div id="ht">Glisser: orbite - Molette: zoom</div>
+  </div>
+  <div id="md">
+    <div id="tb"><div id="tm">00:00</div><div id="pw2"><div id="pf"></div></div>
+      <div style="display:flex;gap:3px"><div class="sb" onclick="setSpd(0.5)">0.5x</div><div class="sb on" onclick="setSpd(1)">1x</div><div class="sb" onclick="setSpd(2)">2x</div></div>
+      <button class="ctrl" id="pbtn" onclick="togglePause()">PAUSE</button><button class="ctrl" onclick="goMenu()">MENU</button>
+    </div>
+    <div id="pr"></div>
+    <div id="vi"><div class="vg" id="vg"></div></div>
+    <div id="lo">
+      <div id="an"><div class="hdr">ANATOMIE <span id="mc">0</span></div>
+        <div id="sw"><svg id="as" viewBox="0 0 120 280" xmlns="http://www.w3.org/2000/svg">
+          <defs><linearGradient id="skinG" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#d4a880"/><stop offset="100%" stop-color="#a06840"/></linearGradient></defs>
+          <ellipse cx="60" cy="20" rx="15" ry="18" fill="url(#skinG)" stroke="#8a5830" stroke-width=".8"/>
+          <rect x="54" y="36" width="12" height="9" rx="3" fill="url(#skinG)" stroke="#8a5830" stroke-width=".6"/>
+          <path d="M37,45 Q29,48 28,65 L28,110 Q30,117 38,118 L82,118 Q90,117 92,110 L92,65 Q91,48 83,45 Z" fill="url(#skinG)" stroke="#8a5830" stroke-width=".8"/>
+          <path d="M38,118 Q34,125 36,133 L84,133 Q86,125 82,118 Z" fill="url(#skinG)" stroke="#8a5830" stroke-width=".6"/>
+          <path d="M37,47 Q25,50 21,67 L19,95 Q18,100 22,101 L28,101 Q32,99 32,95 L33,69 Q36,54 40,49 Z" fill="url(#skinG)" stroke="#8a5830" stroke-width=".6"/>
+          <ellipse cx="19" cy="107" rx="5" ry="7" fill="url(#skinG)" stroke="#8a5830" stroke-width=".5"/>
+          <path d="M83,47 Q95,50 99,67 L101,95 Q102,100 98,101 L92,101 Q88,99 88,95 L87,69 Q84,54 80,49 Z" fill="url(#skinG)" stroke="#8a5830" stroke-width=".6"/>
+          <ellipse cx="101" cy="107" rx="5" ry="7" fill="url(#skinG)" stroke="#8a5830" stroke-width=".5"/>
+          <path d="M38,133 Q33,143 32,168 L31,208 Q31,214 37,215 L50,215 Q56,214 56,208 L56,168 Q56,143 52,133 Z" fill="url(#skinG)" stroke="#8a5830" stroke-width=".6"/>
+          <path d="M31,208 L30,248 Q30,254 37,255 L51,255 Q57,254 57,248 L56,208 Z" fill="url(#skinG)" stroke="#8a5830" stroke-width=".6"/>
+          <path d="M82,133 Q87,143 88,168 L89,208 Q89,214 83,215 L70,215 Q64,214 64,208 L64,168 Q64,143 68,133 Z" fill="url(#skinG)" stroke="#8a5830" stroke-width=".6"/>
+          <path d="M89,208 L90,248 Q90,254 83,255 L69,255 Q63,254 63,248 L64,208 Z" fill="url(#skinG)" stroke="#8a5830" stroke-width=".6"/>
+          <g id="em"></g>
+        </svg></div>
+        <div id="al2"></div>
+        <div id="ma"><div style="font-size:7px;letter-spacing:2px;color:#555;margin-bottom:3px">BILAN MARCH</div><div id="mr2"></div></div>
+      </div>
+      <div id="lg"><div class="hdr">JOURNAL</div><div id="ll"></div></div>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r134/three.min.js"></script>
+<script>
+/* ========== GLOBALS ========== */
+var cKey=null,cData=null,sTime=0,spd=1,paused=false,running=false,curPh=-1,lastEv=-1;
+var appEq=[],humanRoot=null,chairObj=null,lastTS=null;
+var theta=0.5,phi=0.38,rad=5.5,panX=0,panY=0;
+var isDrag=false,isRPan=false,lmx=0,lmy=0;
+var bubbles=[],vicBubble=null,vicBubbleTimer=0,bubbleTimers=[0,0,0];
+var ANI_walkPhase=[0,1.5,3],ANI_cprActive=false,ANI_kneeling=[false,false,false];
+
+/* ========== ANATOMY ZONES ========== */
+var EZ={
+  bavu:{x:60,y:20,c:'#4488ff',l:'BAVU',n:'VA'},iot:{x:62,y:24,c:'#22aaff',l:'IOT',n:'VA'},
+  vni:{x:58,y:16,c:'#2266ff',l:'VNI',n:'Visage'},mhc:{x:60,y:55,c:'#44aaff',l:'MHC',n:'Thorax'},
+  col:{x:60,y:41,c:'#ffaa00',l:'Collier',n:'Cou'},daeR:{x:75,y:68,c:'#ffcc00',l:'Elec.D',n:'Thorax D'},
+  daeL:{x:47,y:82,c:'#ffcc00',l:'Elec.G',n:'Thorax G'},chest:{x:83,y:76,c:'#ff6600',l:'Chest',n:'Thorax D'},
+  strap:{x:60,y:80,c:'#ff8800',l:'Strap',n:'Thorax'},vvpL:{x:22,y:98,c:'#22cc66',l:'VVP D',n:'Bras D'},
+  vvpR:{x:98,y:98,c:'#22cc66',l:'VVP G',n:'Bras G'},grt:{x:38,y:150,c:'#ff2200',l:'Garrot',n:'Cuisse G'},
+  pd:{x:60,y:105,c:'#886600',l:'Plan dur',n:'Rachis'},mid:{x:60,y:108,c:'#aa8800',l:'MID',n:'Corps'},
+  ecg:{x:50,y:60,c:'#ff9900',l:'ECG',n:'Thorax'},furo:{x:97,y:94,c:'#cc44ff',l:'Furo.',n:'Perf.'},
+  morph:{x:23,y:94,c:'#ff66aa',l:'Morphine',n:'Perf.'},keta:{x:22,y:102,c:'#ff44cc',l:'Keta.',n:'Perf.'},
+  adre:{x:22,y:106,c:'#ff3300',l:'Adre.',n:'Perf.'}
+};
+
+/* ========== CASES ========== */
+var CASES={
+  acr:{id:'ACR',tag:'ACR',total:280,pos:'lying',
+    phases:['ARRIVEE','BILAN','RCP','DEFIB','RACS','TRANSPORT'],
+    vitals:[
+      [{l:'FC',v:'0',u:'bpm',c:'cr'},{l:'SpO2',v:'-',u:'%',c:'cr'},{l:'PA',v:'-/-',u:'mmHg',c:'cr'},{l:'FR',v:'0',u:'/min',c:'cr'},{l:'Glyc',v:'-',u:'g/L',c:'wa'},{l:'T',v:'36.1',u:'C',c:'ok'}],
+      [{l:'FC',v:'0',u:'bpm',c:'cr'},{l:'SpO2',v:'78',u:'%',c:'cr'},{l:'PA',v:'-/-',u:'mmHg',c:'cr'},{l:'FR',v:'0',u:'/min',c:'cr'},{l:'Glyc',v:'1.1',u:'g/L',c:'ok'},{l:'T',v:'36.1',u:'C',c:'ok'}],
+      [{l:'FC',v:'0',u:'bpm',c:'cr'},{l:'SpO2',v:'94',u:'%',c:'wa'},{l:'PA',v:'-/-',u:'mmHg',c:'cr'},{l:'FR',v:'0',u:'/min',c:'cr'},{l:'Glyc',v:'1.1',u:'g/L',c:'ok'},{l:'T',v:'36.1',u:'C',c:'ok'}],
+      [{l:'FC',v:'72',u:'bpm',c:'wa'},{l:'SpO2',v:'96',u:'%',c:'wa'},{l:'PA',v:'90/60',u:'mmHg',c:'wa'},{l:'FR',v:'12',u:'/min',c:'ok'},{l:'Glyc',v:'1.1',u:'g/L',c:'ok'},{l:'T',v:'36.1',u:'C',c:'ok'}],
+      [{l:'FC',v:'82',u:'bpm',c:'ok'},{l:'SpO2',v:'98',u:'%',c:'ok'},{l:'PA',v:'100/65',u:'mmHg',c:'wa'},{l:'FR',v:'14',u:'/min',c:'ok'},{l:'Glyc',v:'1.1',u:'g/L',c:'ok'},{l:'T',v:'36.1',u:'C',c:'ok'}],
+      [{l:'FC',v:'86',u:'bpm',c:'ok'},{l:'SpO2',v:'99',u:'%',c:'ok'},{l:'PA',v:'105/70',u:'mmHg',c:'ok'},{l:'FR',v:'15',u:'/min',c:'ok'},{l:'Glyc',v:'1.1',u:'g/L',c:'ok'},{l:'T',v:'36.1',u:'C',c:'ok'}]],
+    march:[{k:'M',l:'Hemorragie',v:'Aucune',s:'mok'},{k:'A',l:'Voies aeriennes',v:'ACR',s:'mcr'},{k:'R',l:'Respiration',v:'ABSENTE',s:'mcr'},{k:'C',l:'Circulation',v:'Pouls ABSENT',s:'mcr'},{k:'H',l:'Hypothermie',v:'36.1',s:'mok'}],
+    events:[
+      {t:0,ph:0,who:'eq',txt:'CODIS 69 - VSAV engage. Lyon 2e. ACR suspecte.',mat:null,eq:[]},
+      {t:18,ph:1,who:'eq',txt:'ACR confirme. Pouls carotidien absent. Apnee.',mat:null,eq:[]},
+      {t:24,ph:1,who:'eq',txt:'BAVU O2 15L/min. Saturometre pose.',mat:{n:'BAVU + O2 15L',d:'Masque O5. 30:2.'},eq:['bavu']},
+      {t:30,ph:2,who:'eq',txt:'MCE 30 compressions. 110/min, 6cm.',mat:{n:'MCE 2 sapeurs',d:'Rotation 2 min.'},eq:[]},
+      {t:40,ph:2,who:'eq',txt:'Bilan transmis CODIS. Demande renfort SMUR.',mat:{n:'Bilan + demande SMUR',d:'Constantes transmises au CODIS.'},eq:['vvpL']},
+      {t:65,ph:3,who:'eq',txt:'DAE pose. Analyse rythme. FV. Choc 200J delivre.',mat:{n:'DAE - Choc 200J',d:'Elec. sous-clav D + apex G.'},eq:['daeR','daeL']},
+      {t:85,ph:4,who:'eq',txt:'Pouls carotidien percu. SpO2 remonte. FC au moniteur.',mat:null,eq:[]},
+      {t:92,ph:4,who:'eq',txt:'Bilan secondaire. SpO2 96%. PA prise. FR 12.',mat:{n:'Bilan complet constantes',d:'SpO2 96%. Pouls 72.'},eq:['iot']},
+      {t:108,ph:5,who:'eq',txt:'Packaging. Depart HEH - USIC.',mat:{n:'Brancard + monitoring',d:'FC/SpO2/PA continus.'},eq:[]}]},
+  trauma:{id:'TRAUMA',tag:'TRAUMA',total:330,pos:'lying',
+    phases:['ARRIVEE','BILAN','ABORD','IMMOB','PACKAGING','TRANSPORT'],
+    vitals:[
+      [{l:'FC',v:'118',u:'bpm',c:'wa'},{l:'SpO2',v:'91',u:'%',c:'wa'},{l:'PA',v:'88/60',u:'mmHg',c:'cr'},{l:'FR',v:'24',u:'/min',c:'wa'},{l:'Glyc',v:'-',u:'g/L',c:'wa'},{l:'T',v:'35.8',u:'C',c:'wa'}],
+      [{l:'FC',v:'122',u:'bpm',c:'wa'},{l:'SpO2',v:'89',u:'%',c:'cr'},{l:'PA',v:'85/55',u:'mmHg',c:'cr'},{l:'FR',v:'26',u:'/min',c:'cr'},{l:'Glyc',v:'1.4',u:'g/L',c:'ok'},{l:'T',v:'35.6',u:'C',c:'wa'}],
+      [{l:'FC',v:'110',u:'bpm',c:'wa'},{l:'SpO2',v:'94',u:'%',c:'wa'},{l:'PA',v:'95/65',u:'mmHg',c:'wa'},{l:'FR',v:'22',u:'/min',c:'wa'},{l:'Glyc',v:'1.4',u:'g/L',c:'ok'},{l:'T',v:'35.8',u:'C',c:'wa'}],
+      [{l:'FC',v:'105',u:'bpm',c:'wa'},{l:'SpO2',v:'96',u:'%',c:'wa'},{l:'PA',v:'100/68',u:'mmHg',c:'wa'},{l:'FR',v:'20',u:'/min',c:'ok'},{l:'Glyc',v:'1.4',u:'g/L',c:'ok'},{l:'T',v:'36.0',u:'C',c:'ok'}],
+      [{l:'FC',v:'98',u:'bpm',c:'ok'},{l:'SpO2',v:'97',u:'%',c:'ok'},{l:'PA',v:'105/72',u:'mmHg',c:'wa'},{l:'FR',v:'18',u:'/min',c:'ok'},{l:'Glyc',v:'1.4',u:'g/L',c:'ok'},{l:'T',v:'36.1',u:'C',c:'ok'}],
+      [{l:'FC',v:'95',u:'bpm',c:'ok'},{l:'SpO2',v:'98',u:'%',c:'ok'},{l:'PA',v:'108/74',u:'mmHg',c:'ok'},{l:'FR',v:'17',u:'/min',c:'ok'},{l:'Glyc',v:'1.4',u:'g/L',c:'ok'},{l:'T',v:'36.2',u:'C',c:'ok'}]],
+    march:[{k:'M',l:'Hemorragie',v:'Fracture ouverte tibia G',s:'mcr'},{k:'A',l:'VA',v:'Libres',s:'mwa'},{k:'R',l:'Respiration',v:'Polypnee 26',s:'mcr'},{k:'C',l:'Circulation',v:'Tachy 122 PA 85/55',s:'mcr'},{k:'H',l:'Hypothermie',v:'35.6 RISQUE',s:'mwa'}],
+    events:[
+      {t:0,ph:0,who:'eq',txt:'CODIS 69 - VSAV+SMUR. Lyon 6e. Chute 6m.',mat:null,eq:[]},
+      {t:15,ph:0,who:'eq',txt:'Fracture ouverte tibia G. GCS 10.',mat:null,eq:[]},
+      {t:22,ph:1,who:'eq',txt:'Garrot CAT MI G. Hemostase. SpO2 91%.',mat:{n:'Garrot CAT + Satur.',d:'7cm proximal.'},eq:['grt']},
+      {t:28,ph:1,who:'eq',txt:'MHC O2 15L. SpO2 89-94%. Stifneck M.',mat:{n:'MHC + Stifneck M',d:'Axe strict.'},eq:['mhc','col']},
+      {t:35,ph:2,who:'eq',txt:'Pansement compressif. Couverture de survie. Demande SMUR.',mat:{n:'Pansement + couverture',d:'Prevention hypothermie.'},eq:['vvpL','vvpR']},
+      {t:42,ph:2,who:'eq',txt:'Bilan transmis CODIS. Constantes surveillees.',mat:{n:'Bilan constantes',d:'SpO2, FC, PA transmis.'},eq:[]},
+      {t:55,ph:3,who:'eq',txt:'Plan dur - technique pont 4 sapeurs.',mat:{n:'Plan dur + pont',d:'Chef a la tete.'},eq:['pd']},
+      {t:68,ph:4,who:'eq',txt:'Chest seal Bolin face D. SpO2 94-97%.',mat:{n:'Bolin Chest Seal D',d:'5e EIC axillaire.'},eq:['chest']},
+      {t:80,ph:4,who:'eq',txt:'Matelas MID. Couverture survie.',mat:{n:'MID + couverture',d:'Vide air. Or interieur.'},eq:['mid']},
+      {t:95,ph:5,who:'eq',txt:'Packaging complet. Depart CHU.',mat:{n:'Packaging transport',d:'Monitoring.'},eq:[]}]},
+  avp:{id:'AVP',tag:'AVP',total:340,pos:'sitting',
+    phases:['ARRIVEE','CONTACT','ABORD','DESINCA','EXTRACTION','TRANSPORT'],
+    vitals:[
+      [{l:'FC',v:'105',u:'bpm',c:'wa'},{l:'SpO2',v:'93',u:'%',c:'wa'},{l:'PA',v:'-',u:'mmHg',c:'wa'},{l:'FR',v:'22',u:'/min',c:'wa'},{l:'Glyc',v:'-',u:'g/L',c:'wa'},{l:'T',v:'-',u:'C',c:'wa'}],
+      [{l:'FC',v:'108',u:'bpm',c:'wa'},{l:'SpO2',v:'91',u:'%',c:'cr'},{l:'PA',v:'110/75',u:'mmHg',c:'ok'},{l:'FR',v:'24',u:'/min',c:'wa'},{l:'Glyc',v:'1.2',u:'g/L',c:'ok'},{l:'T',v:'36.3',u:'C',c:'ok'}],
+      [{l:'FC',v:'102',u:'bpm',c:'wa'},{l:'SpO2',v:'94',u:'%',c:'wa'},{l:'PA',v:'112/76',u:'mmHg',c:'ok'},{l:'FR',v:'22',u:'/min',c:'wa'},{l:'Glyc',v:'1.2',u:'g/L',c:'ok'},{l:'T',v:'36.3',u:'C',c:'ok'}],
+      [{l:'FC',v:'98',u:'bpm',c:'ok'},{l:'SpO2',v:'96',u:'%',c:'wa'},{l:'PA',v:'115/78',u:'mmHg',c:'ok'},{l:'FR',v:'20',u:'/min',c:'ok'},{l:'Glyc',v:'1.2',u:'g/L',c:'ok'},{l:'T',v:'36.3',u:'C',c:'ok'}],
+      [{l:'FC',v:'92',u:'bpm',c:'ok'},{l:'SpO2',v:'97',u:'%',c:'ok'},{l:'PA',v:'118/80',u:'mmHg',c:'ok'},{l:'FR',v:'18',u:'/min',c:'ok'},{l:'Glyc',v:'1.2',u:'g/L',c:'ok'},{l:'T',v:'36.3',u:'C',c:'ok'}],
+      [{l:'FC',v:'88',u:'bpm',c:'ok'},{l:'SpO2',v:'98',u:'%',c:'ok'},{l:'PA',v:'120/80',u:'mmHg',c:'ok'},{l:'FR',v:'16',u:'/min',c:'ok'},{l:'Glyc',v:'1.2',u:'g/L',c:'ok'},{l:'T',v:'36.4',u:'C',c:'ok'}]],
+    march:[{k:'M',l:'Hemorragie',v:'Plaie sourciliere',s:'mwa'},{k:'A',l:'VA',v:'Libres',s:'mwa'},{k:'R',l:'Respiration',v:'Polypnee 24',s:'mcr'},{k:'C',l:'Circulation',v:'Tachy 108',s:'mwa'},{k:'H',l:'Hypothermie',v:'36.3',s:'mok'}],
+    events:[
+      {t:0,ph:0,who:'eq',txt:'CODIS 69 - VSAV+FPT. Lyon 3e. AVP incarcere.',mat:null,eq:[]},
+      {t:15,ph:1,who:'eq',txt:'Contact verbal. GCS 13. SpO2 93%.',mat:null,eq:[]},
+      {t:20,ph:1,who:'eq',txt:'SpO2 91%. MHC O2 15L. Stifneck S.',mat:{n:'MHC + Stifneck S',d:'Axe maintenu.'},eq:['mhc','col']},
+      {t:30,ph:2,who:'eq',txt:'Pansement compressif. Bilan transmis CODIS. Demande SMUR.',mat:{n:'Pansement + bilan CODIS',d:'Constantes transmises. SMUR demande.'},eq:['vvpR']},
+      {t:48,ph:3,who:'eq',txt:'Desincarceration - decoupe pied milieu.',mat:null,eq:[]},
+      {t:72,ph:3,who:'eq',txt:'Strapping thoracique D. Pansement sourcilier.',mat:{n:'Strapping thorax',d:'Paradoxe reduit.'},eq:['strap','chest']},
+      {t:92,ph:4,who:'eq',txt:'Extraction plan dur 4 sapeurs.',mat:{n:'Plan dur extraction',d:'Laterale controlee.'},eq:['pd']},
+      {t:105,ph:5,who:'eq',txt:'SpO2 97%. Depart CHU Croix-Rousse.',mat:{n:'Transport',d:'Constantes stables.'},eq:[]}]},
+  oap:{id:'OAP',tag:'DETRESSE',total:220,pos:'sitting',
+    phases:['ARRIVEE','BILAN','POSITION','THERAP','STABIL','TRANSPORT'],
+    vitals:[
+      [{l:'FC',v:'128',u:'bpm',c:'cr'},{l:'SpO2',v:'78',u:'%',c:'cr'},{l:'PA',v:'175/110',u:'mmHg',c:'cr'},{l:'FR',v:'32',u:'/min',c:'cr'},{l:'Glyc',v:'-',u:'g/L',c:'wa'},{l:'T',v:'37.2',u:'C',c:'ok'}],
+      [{l:'FC',v:'124',u:'bpm',c:'cr'},{l:'SpO2',v:'82',u:'%',c:'cr'},{l:'PA',v:'172/108',u:'mmHg',c:'cr'},{l:'FR',v:'30',u:'/min',c:'cr'},{l:'Glyc',v:'1.3',u:'g/L',c:'ok'},{l:'T',v:'37.2',u:'C',c:'ok'}],
+      [{l:'FC',v:'115',u:'bpm',c:'wa'},{l:'SpO2',v:'88',u:'%',c:'cr'},{l:'PA',v:'165/100',u:'mmHg',c:'cr'},{l:'FR',v:'28',u:'/min',c:'wa'},{l:'Glyc',v:'1.3',u:'g/L',c:'ok'},{l:'T',v:'37.2',u:'C',c:'ok'}],
+      [{l:'FC',v:'102',u:'bpm',c:'wa'},{l:'SpO2',v:'92',u:'%',c:'wa'},{l:'PA',v:'155/95',u:'mmHg',c:'wa'},{l:'FR',v:'24',u:'/min',c:'wa'},{l:'Glyc',v:'1.3',u:'g/L',c:'ok'},{l:'T',v:'37.1',u:'C',c:'ok'}],
+      [{l:'FC',v:'92',u:'bpm',c:'ok'},{l:'SpO2',v:'95',u:'%',c:'wa'},{l:'PA',v:'142/88',u:'mmHg',c:'wa'},{l:'FR',v:'20',u:'/min',c:'ok'},{l:'Glyc',v:'1.3',u:'g/L',c:'ok'},{l:'T',v:'37.1',u:'C',c:'ok'}],
+      [{l:'FC',v:'86',u:'bpm',c:'ok'},{l:'SpO2',v:'97',u:'%',c:'ok'},{l:'PA',v:'132/82',u:'mmHg',c:'ok'},{l:'FR',v:'17',u:'/min',c:'ok'},{l:'Glyc',v:'1.3',u:'g/L',c:'ok'},{l:'T',v:'37.0',u:'C',c:'ok'}]],
+    march:[{k:'M',l:'Hemorragie',v:'Absente',s:'mok'},{k:'A',l:'VA',v:'Crepitants',s:'mwa'},{k:'R',l:'Respiration',v:'Polypnee 32',s:'mcr'},{k:'C',l:'Circulation',v:'Tachy 128 HTA',s:'mcr'},{k:'H',l:'Hypothermie',v:'37.2',s:'mok'}],
+    events:[
+      {t:0,ph:0,who:'eq',txt:'CODIS 69 - VSAV. Lyon 7e. F72 ans. Dyspnee.',mat:null,eq:[]},
+      {t:12,ph:1,who:'eq',txt:'Assise. Cyanose. Crepitants. SpO2 78%.',mat:null,eq:[]},
+      {t:18,ph:2,who:'eq',txt:'Position demi-assise. Jambes declives.',mat:{n:'Position demi-assise',d:'Precharge reduite.'},eq:[]},
+      {t:22,ph:3,who:'eq',txt:'O2 15L MHC pose. SpO2 78 vers 88%. Bilan CODIS.',mat:{n:'MHC O2 15L',d:'SpO2 amelioree.'},eq:['vni']},
+      {t:28,ph:3,who:'eq',txt:'Surveillance constantes. Demande SMUR au CODIS.',mat:{n:'Bilan + demande SMUR',d:'SpO2 88%. Constantes transmises.'},eq:['vvpR']},
+      {t:50,ph:4,who:'eq',txt:'Bilan secondaire. SpO2 92%, PA 155/95.',mat:{n:'Bilan secondaire',d:'SpO2 92%. FC 102.'},eq:['ecg']},
+      {t:75,ph:5,who:'eq',txt:'SpO2 95%. Transport HCL Lyon Sud.',mat:{n:'Transport',d:'MHC maintenu.'},eq:[]}]}
+};
+
+/* ========== COMIC DIALOGUE ========== */
+var COMIC={
+  acr:[
+    [{t:"ACR SUSPECTE !",ty:"shout"},{t:"DAE et BAVU !",ty:"normal"},{t:"J'arrive !",ty:"normal"},null],
+    [{t:"PAS DE POULS !",ty:"shout"},{t:"Pupilles fixees...",ty:"thought"},{t:"Je confirme apnee",ty:"normal"},null],
+    [{t:"BAVU en place ! Ventile !",ty:"shout"},{t:"Je prends les compressions !",ty:"normal"},{t:"30 pour 2 !",ty:"normal"},null],
+    [{t:"Rotation 2 min !",ty:"normal"},{t:"Je relaye le MCE",ty:"normal"},{t:"110 par minute chef !",ty:"normal"},null],
+    [{t:"CHOC CONSEILLE !",ty:"shout"},{t:"Ecartez-vous tous !",ty:"shout"},{t:"Choc delivre ! MCE !",ty:"normal"},null],
+    [{t:"POULS PERCU !",ty:"shout"},{t:"SpO2 remonte !",ty:"normal"},{t:"Je prends les constantes",ty:"normal"},{t:"Ou suis-je...",ty:"normal"}],
+    [{t:"Bilan au CODIS",ty:"normal"},{t:"Brancard pret",ty:"normal"},{t:"Monitoring en place",ty:"normal"},{t:"J'ai mal...",ty:"sad"}],
+    [{t:"Depart HEH",ty:"normal"},{t:"Surveillance continue",ty:"normal"},{t:"Constantes stables",ty:"normal"},{t:"Merci...",ty:"normal"}]
+  ],
+  trauma:[
+    [{t:"CHUTE 6 METRES !",ty:"shout"},{t:"Materiel rachis !",ty:"normal"},{t:"Plan dur !",ty:"normal"},{t:"MA JAMBE !",ty:"shout-victim"}],
+    [{t:"Hemorragie active !",ty:"shout"},{t:"GCS 10",ty:"thought"},{t:"Satur posee",ty:"normal"},{t:"J'ai chute !",ty:"shout-victim"}],
+    [{t:"GARROT ! Heure notee",ty:"shout"},{t:"SpO2 91%",ty:"normal"},{t:"O2 15L en place",ty:"normal"},{t:"Ca brule !",ty:"sad"}],
+    [{t:"Stifneck M ! Axe strict",ty:"normal"},{t:"Pansement compressif",ty:"normal"},{t:"Couverture de survie",ty:"normal"},{t:"Vous allez m'aider ?",ty:"sad"}],
+    [{t:"Demande SMUR au CODIS",ty:"normal"},{t:"Constantes au bilan",ty:"normal"},{t:"SpO2 94% sous O2",ty:"normal"},{t:"Ca diminue...",ty:"normal"}],
+    [{t:"TECHNIQUE PONT !",ty:"shout"},{t:"A mon commandement !",ty:"normal"},{t:"Sangles posees !",ty:"normal"},{t:"Attention au dos !",ty:"sad"}],
+    [{t:"Chest seal pose",ty:"normal"},{t:"SpO2 remonte !",ty:"normal"},{t:"MID en place",ty:"normal"},{t:"Tenez bon !",ty:"normal"}],
+    [{t:"DEPART CHU !",ty:"shout"},{t:"Bilan transmis",ty:"normal"},{t:"Stables",ty:"normal"},{t:"Merci...",ty:"normal"}]
+  ],
+  avp:[
+    [{t:"AVP ! INCARCERE !",ty:"shout"},{t:"Securisation !",ty:"normal"},{t:"Calage vehicule !",ty:"normal"},{t:"AU SECOURS !",ty:"shout-victim"}],
+    [{t:"Contact verbal OK",ty:"normal"},{t:"Satur posee 93%",ty:"normal"},{t:"FC au pouls 105",ty:"normal"},{t:"MAL PARTOUT !",ty:"shout-victim"}],
+    [{t:"Axe tete-cou !",ty:"shout"},{t:"Stifneck S pose",ty:"normal"},{t:"O2 15L MHC",ty:"normal"},{t:"Pas respirer...",ty:"sad"}],
+    [{t:"Bilan au CODIS",ty:"normal"},{t:"Pansement compressif",ty:"normal"},{t:"Surveillance constantes",ty:"normal"},{t:"DOUCEMENT !",ty:"shout-victim"}],
+    [{t:"DESINCARCERATION !",ty:"shout"},{t:"Decoupe !",ty:"shout"},{t:"Axe tenu !",ty:"normal"},{t:"Les decoupes...",ty:"thought"}],
+    [{t:"Strapping pose",ty:"normal"},{t:"Volet stabilise",ty:"normal"},{t:"Pansement sourcil",ty:"normal"},{t:"Ca va mieux...",ty:"normal"}],
+    [{t:"EXTRACTION !",ty:"shout"},{t:"Plan dur 4 SP !",ty:"shout"},{t:"Brancard pret",ty:"normal"},{t:"Doucement...",ty:"sad"}],
+    [{t:"Depart CHU",ty:"normal"},{t:"Stables",ty:"normal"},{t:"Bilan transmis",ty:"normal"},{t:"Merci...",ty:"normal"}]
+  ],
+  oap:[
+    [{t:"DETRESSE RESPI !",ty:"shout"},{t:"O2 en main !",ty:"normal"},{t:"Satur pret",ty:"normal"},{t:"J'ETOUFFE !",ty:"shout-victim"}],
+    [{t:"SpO2 78% !",ty:"shout"},{t:"Cyanose...",ty:"thought"},{t:"Crepitants ++",ty:"normal"},{t:"Pas respirer...",ty:"sad"}],
+    [{t:"Demi-assise !",ty:"normal"},{t:"Jambes declives",ty:"normal"},{t:"Position installee",ty:"normal"},{t:"Mieux assise...",ty:"normal"}],
+    [{t:"O2 15L MHC MAX !",ty:"shout"},{t:"SpO2 remonte 88",ty:"normal"},{t:"Bilan au CODIS",ty:"normal"},{t:"Le masque aide...",ty:"normal"}],
+    [{t:"Demande renfort SMUR",ty:"normal"},{t:"PA 155/95",ty:"normal"},{t:"Surveillance continue",ty:"thought"},{t:"Je respire mieux",ty:"normal"}],
+    [{t:"Stables !",ty:"normal"},{t:"SpO2 95% FR 20",ty:"normal"},{t:"Constantes OK",ty:"normal"},{t:"Formidables !",ty:"normal"}],
+    [{t:"Lyon Sud USIC",ty:"normal"},{t:"Brancard 30 degres",ty:"normal"},{t:"Monitoring",ty:"normal"},{t:"Merci...",ty:"normal"}]
+  ]
+};
+
+/* ========== CACHED DOM REFS (hot path) ========== */
+var EL={};['sim','v3','p3','tm','pf','pr','em','mc','ll','al2','pp','ppw','ppt','ppm','vg','mr2','pbtn'].forEach(function(id){EL[id]=document.getElementById(id);});
+var phaseEls=[];
+
+/* ========== THREE.JS ========== */
+var canvas=document.getElementById('cv');
+var renderer=new THREE.WebGLRenderer({canvas:canvas,antialias:true});
+renderer.shadowMap.enabled=true;
+var S=new THREE.Scene();S.background=new THREE.Color(0x0a0b10);S.fog=new THREE.Fog(0x0a0b10,15,50);
+var CAM=new THREE.PerspectiveCamera(50,1,0.05,100);
+CAM.position.x=0;CAM.position.y=1.4;CAM.position.z=4.5;CAM.lookAt(0,0.8,0);
+
+S.add(new THREE.AmbientLight(0x8899bb,1.4));
+var sun=new THREE.DirectionalLight(0xfff0ee,2.2);sun.position.x=5;sun.position.y=10;sun.position.z=6;sun.castShadow=true;S.add(sun);
+var fill1=new THREE.DirectionalLight(0x6688cc,0.9);fill1.position.x=-4;fill1.position.y=2;fill1.position.z=-3;S.add(fill1);
+var fill2=new THREE.DirectionalLight(0xffeedd,0.7);fill2.position.x=2;fill2.position.y=1;fill2.position.z=5;S.add(fill2);
+var racsL=new THREE.PointLight(0x22ff66,0,4);racsL.position.y=1;S.add(racsL);
+
+function mk(geo,col){var m=new THREE.Mesh(geo,new THREE.MeshLambertMaterial({color:col}));m.castShadow=true;m.receiveShadow=true;return m;}
+function mk2(parent,geo,col,x,y,z,rx,ry,rz){
+  var m=mk(geo,col);
+  m.position.x=x||0;m.position.y=y||0;m.position.z=z||0;
+  if(rx)m.rotation.x=rx;if(ry)m.rotation.y=ry;if(rz)m.rotation.z=rz;
+  parent.add(m);return m;
+}
+
+/* ========== SCENE BUILDING ========== */
+var roomObjs=[];
+function clearRoom(){roomObjs.forEach(function(o){S.remove(o);});roomObjs=[];}
+function addR(geo,col,x,y,z,rx,ry,rz){
+  var o=mk(geo,col);o.position.x=x;o.position.y=y;o.position.z=z;
+  if(rx)o.rotation.x=rx;if(ry)o.rotation.y=ry;if(rz)o.rotation.z=rz;
+  S.add(o);roomObjs.push(o);return o;
+}
+function addWheel2(x,y,z){
+  addR(new THREE.BoxGeometry(.16,.55,.55),0x1a1a1a,x,y,z);
+  addR(new THREE.BoxGeometry(.17,.25,.25),0x888888,x,y,z);
+}
+function buildScene_ACR(){
+  addR(new THREE.PlaneGeometry(16,14),0x1a1510,0,0,0,-Math.PI/2);
+  addR(new THREE.BoxGeometry(16,.12,14),0x2a2218,0,.06,0);
+  addR(new THREE.BoxGeometry(.1,3,14),0x1e1a14,-8,1.5,0);
+  addR(new THREE.BoxGeometry(16,3,.1),0x201c16,0,1.5,-7);
+  addR(new THREE.BoxGeometry(16,3,.1),0x1e1a14,0,1.5,7);
+  addR(new THREE.BoxGeometry(16,.1,14),0x181510,0,3,0);
+  addR(new THREE.BoxGeometry(2.8,.55,1.2),0x334455,3.2,.27,-3);
+  addR(new THREE.BoxGeometry(2.8,.5,.2),0x334455,3.2,.65,-3.6);
+  addR(new THREE.BoxGeometry(1.2,.06,.7),0x3a2a1a,1.5,.4,-2.2);
+  addR(new THREE.BoxGeometry(.06,.4,.06),0x2a1a10,.9,.2,-1.9);
+  addR(new THREE.BoxGeometry(.06,.4,.06),0x2a1a10,2.1,.2,-1.9);
+  addR(new THREE.BoxGeometry(.06,.4,.06),0x2a1a10,.9,.2,-2.5);
+  addR(new THREE.BoxGeometry(.06,.4,.06),0x2a1a10,2.1,.2,-2.5);
+  addR(new THREE.BoxGeometry(1.6,.9,.06),0x0a0a0a,-5,1.6,-6.9);
+  addR(new THREE.BoxGeometry(3,.02,2),0x442222,0,.01,0);
+  addR(new THREE.BoxGeometry(2,.05,1.3),0x334466,-4,2,-6.95);
+}
+function buildScene_TRAUMA(){
+  addR(new THREE.PlaneGeometry(20,18),0x888880,0,0,0,-Math.PI/2);
+  addR(new THREE.BoxGeometry(20,.05,18),0x777770,0,.025,0);
+  for(var i=-2;i<=2;i++){
+    addR(new THREE.BoxGeometry(.08,1,.08),0xff6600,i*2.5,0.5,5);
+    addR(new THREE.BoxGeometry(2.2,.1,.06),0xff6600,i*2.5+1.25,0.8,5);
+    addR(new THREE.BoxGeometry(2.2,.1,.06),0xff6600,i*2.5+1.25,0.4,5);
+  }
+  addR(new THREE.CylinderGeometry(.04,.04,4,8),0x888888,2,.04,1,0,0,Math.PI/2);
+  addR(new THREE.CylinderGeometry(.04,.04,3,8),0x888888,-1.5,.04,2.5,0,.5,Math.PI/2);
+  addR(new THREE.CylinderGeometry(.04,.04,2.5,8),0x777777,1,.04,-1,0,.3,Math.PI/2);
+  addR(new THREE.BoxGeometry(2,.04,.4),0x8a6a40,1,.02,1.5,0,.2);
+  addR(new THREE.BoxGeometry(1.5,.04,.35),0x8a6a40,-1,.02,-0.5,0,-.3);
+  addR(new THREE.CylinderGeometry(.3,.35,.01,12),0x660000,-.2,.03,-.3);
+  addR(new THREE.CylinderGeometry(.15,.2,.01,10),0x550000,.4,.03,-.5);
+  addR(new THREE.CylinderGeometry(.08,.1,.01,8),0x660000,-.5,.03,.1);
+  addR(new THREE.SphereGeometry(.15,10,6,0,Math.PI*2,0,Math.PI*.5),0xffcc00,1.5,.15,-0.8);
+  addR(new THREE.BoxGeometry(12,5,.3),0x555550,0,2.5,-8);
+}
+function buildScene_AVP(){
+  // Route
+  addR(new THREE.PlaneGeometry(30,24),0x2a2a2a,0,0,0,-Math.PI/2);
+  // Marquages centraux
+  for(var i=-5;i<=5;i++) addR(new THREE.BoxGeometry(.15,.01,1),0xffffff,0,.02,i*2.2);
+  // Bandes laterales
+  addR(new THREE.BoxGeometry(.2,.01,24),0xffffff,-6,.02,0);
+  addR(new THREE.BoxGeometry(.2,.01,24),0xffffff,6,.02,0);
+  // Trottoirs
+  addR(new THREE.BoxGeometry(3,.18,24),0x777777,-8.5,.09,0);
+  addR(new THREE.BoxGeometry(3,.18,24),0x777777,8.5,.09,0);
+
+  // ═══ VOITURE ACCIDENTEE (groupe) ═══
+  var car=new THREE.Group();
+  // Soubassement
+  mk2(car,new THREE.BoxGeometry(4.4,.1,1.8),0x111111,0,.05,0);
+  // Carrosserie basse (ailes + bas de caisse)
+  mk2(car,new THREE.BoxGeometry(4.4,.65,1.8),0x2244aa,0,.42,0);
+  // Passage de roues (creux visuels — couleur sombre)
+  mk2(car,new THREE.BoxGeometry(.6,.3,.08),0x111111,-1.3,.25,.91);
+  mk2(car,new THREE.BoxGeometry(.6,.3,.08),0x111111,-1.3,.25,-.91);
+  mk2(car,new THREE.BoxGeometry(.6,.3,.08),0x111111,1.3,.25,.91);
+  mk2(car,new THREE.BoxGeometry(.6,.3,.08),0x111111,1.3,.25,-.91);
+  // Capot (plat, légèrement enfoncé côté impact)
+  mk2(car,new THREE.BoxGeometry(1.3,.05,1.7),0x2040aa,-1.8,.78,0);
+  // Coffre arrière
+  mk2(car,new THREE.BoxGeometry(1,.05,1.7),0x2244aa,1.7,.78,0);
+  // Habitacle (vitre = transparent)
+  mk2(car,new THREE.BoxGeometry(2,.7,1.7),0x1a2a44,-.1,1.1,0);
+  // Toit
+  mk2(car,new THREE.BoxGeometry(1.8,.05,1.6),0x2244aa,-.1,1.48,0);
+  // Montants A (avant)
+  mk2(car,new THREE.BoxGeometry(.06,.5,.06),0x2244aa,-.95,1.0,.78);
+  mk2(car,new THREE.BoxGeometry(.06,.5,.06),0x2244aa,-.95,1.0,-.78);
+  // Montants B (milieu)
+  mk2(car,new THREE.BoxGeometry(.06,.5,.06),0x2244aa,.15,1.0,.78);
+  mk2(car,new THREE.BoxGeometry(.06,.5,.06),0x2244aa,.15,1.0,-.78);
+  // Montants C (arrière)
+  mk2(car,new THREE.BoxGeometry(.06,.5,.06),0x2244aa,.85,1.0,.78);
+  mk2(car,new THREE.BoxGeometry(.06,.5,.06),0x2244aa,.85,1.0,-.78);
+  // Pare-brise avant (semi-transparent)
+  var wpb=mk2(car,new THREE.BoxGeometry(1.5,.55,.05),0x99aabb,-.95,1.05,0);
+  wpb.material=new THREE.MeshLambertMaterial({color:0x99aabb,transparent:true,opacity:0.35});
+  // Fissures pare-brise
+  mk2(car,new THREE.BoxGeometry(.35,.008,.02),0xffffff,-.95,1.2,.2);
+  mk2(car,new THREE.BoxGeometry(.2,.008,.02),0xdddddd,-1,1.0,-.15);
+  // Lunette arrière
+  var wla=mk2(car,new THREE.BoxGeometry(1,.45,.05),0x778899,.85,1.05,0);
+  wla.material=new THREE.MeshLambertMaterial({color:0x778899,transparent:true,opacity:0.4});
+  // Vitres latérales droites (intactes, semi-transparent)
+  var vd1=mk2(car,new THREE.BoxGeometry(1,.4,.04),0x778899,-.4,1.05,.87);
+  vd1.material=new THREE.MeshLambertMaterial({color:0x778899,transparent:true,opacity:0.35});
+  var vd2=mk2(car,new THREE.BoxGeometry(.65,.4,.04),0x778899,.5,1.05,.87);
+  vd2.material=new THREE.MeshLambertMaterial({color:0x778899,transparent:true,opacity:0.35});
+  // Portière gauche ENFONCÉE (côté conducteur = impact)
+  mk2(car,new THREE.BoxGeometry(1,.6,.06),0x1a3088,-.4,.7,-.92);
+  mk2(car,new THREE.BoxGeometry(.65,.6,.06),0x1a3388,.5,.72,-.92);
+  // Phares avant
+  mk2(car,new THREE.BoxGeometry(.05,.1,.22),0xffffcc,-2.2,.55,.7); // intact
+  mk2(car,new THREE.BoxGeometry(.05,.1,.22),0xffaa33,-2.2,.55,-.7); // cassé
+  // Calandre
+  mk2(car,new THREE.BoxGeometry(.05,.2,1.2),0x333333,-2.2,.5,0);
+  // Feux arrière
+  mk2(car,new THREE.BoxGeometry(.05,.1,.18),0xcc0000,2.2,.55,.72);
+  mk2(car,new THREE.BoxGeometry(.05,.1,.18),0xcc0000,2.2,.55,-.72);
+  // Pare-chocs avant
+  mk2(car,new THREE.BoxGeometry(.12,.15,1.85),0x333333,-2.22,.3,0);
+  // Pare-chocs arrière
+  mk2(car,new THREE.BoxGeometry(.12,.15,1.8),0x333333,2.22,.3,0);
+  // Rétroviseur droit (intact)
+  mk2(car,new THREE.BoxGeometry(.12,.08,.04),0x222222,-.6,.95,.95);
+  // Rétro gauche arraché au sol (dans la scène, pas dans le groupe car)
+  addR(new THREE.BoxGeometry(.1,.06,.03),0x222222,1.5,.02,-.3);
+  // Roues — cylindres couchés correctement
+  function carWheel(cx,cz){
+    var t=mk(new THREE.CylinderGeometry(.28,.28,.14,16),0x1a1a1a);
+    t.rotation.x=Math.PI/2;t.position.x=cx;t.position.y=.28;t.position.z=cz;car.add(t);
+    var r=mk(new THREE.CylinderGeometry(.16,.16,.15,10),0x888888);
+    r.rotation.x=Math.PI/2;r.position.x=cx;r.position.y=.28;r.position.z=cz;car.add(r);
+  }
+  carWheel(-1.35,.95);carWheel(-1.35,-.95);
+  carWheel(1.35,.95);carWheel(1.35,-.95);
+  // Plaques immatriculation
+  mk2(car,new THREE.BoxGeometry(.05,.07,.32),0xffffff,-2.22,.22,0);
+  mk2(car,new THREE.BoxGeometry(.05,.07,.32),0xffffff,2.22,.22,0);
+  // Poignées de porte
+  mk2(car,new THREE.BoxGeometry(.02,.03,.08),0xaaaaaa,-.3,.78,.92);
+  mk2(car,new THREE.BoxGeometry(.02,.03,.08),0xaaaaaa,.6,.78,.92);
+
+  // Positionner la voiture dans la scène
+  car.position.x=0;car.position.z=-1.6;
+  S.add(car);roomObjs.push(car);
+
+  // ═══ DÉBRIS SUR LA ROUTE ═══
+  addR(new THREE.BoxGeometry(.3,.02,.12),0x2244aa,3,.01,-1.2);
+  addR(new THREE.BoxGeometry(.18,.015,.08),0x2244aa,2.5,.01,-.6);
+  // Éclats de verre
+  for(var gi=0;gi<8;gi++){
+    var gx=2+Math.random()*2,gz=-3+Math.random()*2.5,gs=.02+Math.random()*.06;
+    var gm=addR(new THREE.BoxGeometry(gs,.003,gs),0xaaccdd,gx,.015,gz);
+    gm.material=new THREE.MeshLambertMaterial({color:0xaaccdd,transparent:true,opacity:0.5});
+  }
+  // Sang sur la route
+  addR(new THREE.BoxGeometry(.45,.005,.35),0x660000,1.8,.01,-1);
+  addR(new THREE.BoxGeometry(.18,.005,.22),0x550000,2.2,.01,-1.8);
+  addR(new THREE.BoxGeometry(.1,.005,.12),0x660000,1.2,.01,-2.2);
+  // Traces de freinage
+  addR(new THREE.BoxGeometry(.1,.003,5.5),0x1a1a1a,-.5,.01,2);
+  addR(new THREE.BoxGeometry(.1,.003,4.8),0x1a1a1a,.5,.01,2.3);
+}
+function buildScene_OAP(){
+  addR(new THREE.PlaneGeometry(12,10),0x1a1510,0,0,0,-Math.PI/2);
+  addR(new THREE.BoxGeometry(12,.12,10),0x2a2218,0,.06,0);
+  addR(new THREE.BoxGeometry(.1,3,10),0x1e1a14,-6,1.5,0);
+  addR(new THREE.BoxGeometry(12,3,.1),0x201c16,0,1.5,-5);
+  addR(new THREE.BoxGeometry(12,3,.1),0x1e1a14,0,1.5,5);
+  addR(new THREE.BoxGeometry(12,.1,10),0x181510,0,3,0);
+  addR(new THREE.BoxGeometry(2.2,.5,1.6),0x3a3040,-3.5,.25,-2);
+  addR(new THREE.BoxGeometry(2.2,.15,1.6),0xeeeedd,-3.5,.57,-2);
+  addR(new THREE.BoxGeometry(.1,.8,1.6),0x4a3828,-4.6,.4,-2);
+  addR(new THREE.BoxGeometry(.5,.12,.4),0xffffee,-4.2,.62,-2);
+  addR(new THREE.BoxGeometry(.5,.6,.5),0x3a2a1a,-4.8,.3,-.8);
+  addR(new THREE.BoxGeometry(.12,.08,.06),0xffffff,-4.8,.62,-.8);
+  addR(new THREE.BoxGeometry(.08,.1,.06),0x44aa44,-4.65,.65,-.75);
+  addR(new THREE.BoxGeometry(2,.05,1.3),0x334466,-2,2,-4.95);
+  addR(new THREE.BoxGeometry(2,.02,1.5),0x442233,0,.01,-1.5);
+}
+
+/* ========== HUMAN ========== */
+function buildHuman(pos){
+  var root=new THREE.Group();
+  var SK=0xd4a888,CL=0x3a4a5a,CL2=0x1a2535;
+  function add(g,geo,col,x,y,z,sx,sy,sz){var m=mk(geo,col);if(x!==undefined){m.position.x=x;m.position.y=y;m.position.z=z;}if(sx)m.scale.set(sx,sy,sz);g.add(m);return m;}
+  var torsoG=new THREE.Group();torsoG.position.y=0.65;root.add(torsoG);
+  add(torsoG,new THREE.CylinderGeometry(.20,.22,.55,16),CL,0,0,0,1,1,.7);
+  add(torsoG,new THREE.SphereGeometry(.21,12,10),CL,0,.10,0,1,.7,.75);
+  var pelG=new THREE.Group();pelG.position.y=0.32;root.add(pelG);
+  add(pelG,new THREE.CylinderGeometry(.20,.18,.20,14),CL2,0,0,0,1,1,.75);
+  var neckG=new THREE.Group();neckG.position.y=0.96;root.add(neckG);
+  add(neckG,new THREE.CylinderGeometry(.075,.085,.13,12),SK,0,0,0);
+  var headG=new THREE.Group();headG.position.y=1.13;root.add(headG);
+  add(headG,new THREE.SphereGeometry(.13,16,14),SK,0,0,0,1,1.15,1.05);
+  add(headG,new THREE.SphereGeometry(.105,12,10),SK,0,-.04,.015,1,.6,1);
+  add(headG,new THREE.SphereGeometry(.135,16,12,0,Math.PI*2,0,Math.PI*.55),0x2a1810,0,.015,-.01,1,1.05,1.05);
+  [-1,1].forEach(function(s){add(headG,new THREE.SphereGeometry(.012,8,6),0x1a2030,s*.05,.025,.132);});
+  add(headG,new THREE.SphereGeometry(.025,8,6),SK,0,-.035,.135,1,.85,1.1);
+  add(headG,new THREE.SphereGeometry(.035,10,6),0xa05848,0,-.07,.10,1.2,.35,.7);
+  var armGs=[];
+  [-1,1].forEach(function(s){
+    var ag=new THREE.Group();ag.position.x=s*.32;ag.position.y=.96;root.add(ag);
+    add(ag,new THREE.CylinderGeometry(.06,.055,.30,10),CL,0,-.15,0);
+    var fg=new THREE.Group();fg.position.y=-.30;ag.add(fg);
+    add(fg,new THREE.CylinderGeometry(.05,.042,.27,10),SK,0,-.13,0);
+    add(fg,new THREE.BoxGeometry(.085,.10,.038),SK,0,-.27,0);
+    armGs.push({ag:ag,fg:fg,side:s});
+  });
+  var legGs=[];
+  [-1,1].forEach(function(s){
+    var hpG=new THREE.Group();hpG.position.x=s*.10;hpG.position.y=.20;root.add(hpG);
+    add(hpG,new THREE.CylinderGeometry(.085,.075,.36,12),CL2,0,-.18,0);
+    var knG=new THREE.Group();knG.position.y=-.36;hpG.add(knG);
+    add(knG,new THREE.SphereGeometry(.072,10,8),CL2,0,0,0);
+    var shG=new THREE.Group();shG.position.y=-.04;knG.add(shG);
+    add(shG,new THREE.CylinderGeometry(.062,.048,.34,10),CL2,0,-.17,0);
+    var ftG=new THREE.Group();ftG.position.y=-.34;shG.add(ftG);
+    add(ftG,new THREE.BoxGeometry(.10,.07,.22),0x111111,0,-.035,.05);
+    legGs.push({hpG:hpG,knG:knG,shG:shG,ftG:ftG});
+  });
+  root.userData={armGs:armGs,legGs:legGs,headG:headG,torsoG:torsoG,skinParts:[],woundObjs:[]};
+
+  // Collect skin parts for symptom coloring
+  function tagSkin(group){
+    group.children.forEach(function(c){
+      if(c.material && c.material.color){
+        var col=c.material.color;
+        if(col.r>0.6&&col.g>0.4&&col.b>0.3&&col.r>col.b) root.userData.skinParts.push(c);
+      }
+      if(c.children&&c.children.length) tagSkin(c);
+    });
+  }
+  tagSkin(root);
+
+  // ═══ WOUNDS / BLOOD per case ═══
+  var BLOOD=new THREE.MeshLambertMaterial({color:0x880000});
+  var BLOOD_DARK=new THREE.MeshLambertMaterial({color:0x550000});
+  var BRUISE=new THREE.MeshLambertMaterial({color:0x443366});
+  var WOUND=new THREE.MeshLambertMaterial({color:0xaa2200});
+
+  if(pos==='lying'){
+    // ACR: no visible wound, just cyanose (handled by symptoms)
+    // TRAUMA: fracture ouverte tibia G + plaie frontale + sang
+    if(window._currentCase==='trauma'){
+      // Plaie frontale (front head wound)
+      var pw=new THREE.Mesh(new THREE.BoxGeometry(.08,.03,.03),BLOOD);
+      pw.position.x=.06;pw.position.y=.06;pw.position.z=.14;headG.add(pw);
+      root.userData.woundObjs.push(pw);
+      // Sang coulant du front
+      var sc1=new THREE.Mesh(new THREE.BoxGeometry(.02,.08,.02),BLOOD);
+      sc1.position.x=.06;sc1.position.y=-.02;sc1.position.z=.14;headG.add(sc1);
+      root.userData.woundObjs.push(sc1);
+      // Hematome tempe gauche
+      var ht=new THREE.Mesh(new THREE.SphereGeometry(.03,6,5),BRUISE);
+      ht.position.x=-.1;ht.position.y=.02;ht.position.z=.10;headG.add(ht);
+      root.userData.woundObjs.push(ht);
+      // Fracture ouverte tibia G (jambe gauche = legGs[0])
+      // Sang autour du tibia
+      var ftw=new THREE.Mesh(new THREE.SphereGeometry(.04,6,5),BLOOD);
+      ftw.position.y=-.22;ftw.position.z=.03;legGs[0].shG.add(ftw);
+      root.userData.woundObjs.push(ftw);
+      // Os visible (blanc)
+      var bone=new THREE.Mesh(new THREE.CylinderGeometry(.012,.012,.06,6),new THREE.MeshLambertMaterial({color:0xeeeedd}));
+      bone.position.y=-.22;bone.position.z=.05;bone.rotation.x=.5;legGs[0].shG.add(bone);
+      root.userData.woundObjs.push(bone);
+      // Sang qui coule le long de la jambe
+      var sc2=new THREE.Mesh(new THREE.BoxGeometry(.015,.15,.015),BLOOD_DARK);
+      sc2.position.y=-.28;sc2.position.z=.02;legGs[0].shG.add(sc2);
+      root.userData.woundObjs.push(sc2);
+      // Ecorchures bras gauche
+      var ec1=new THREE.Mesh(new THREE.BoxGeometry(.02,.06,.02),WOUND);
+      ec1.position.y=-.18;ec1.position.z=.03;armGs[0].fg.add(ec1);
+      root.userData.woundObjs.push(ec1);
+    }
+  } else {
+    // SITTING cases
+    if(window._currentCase==='avp'){
+      // Plaie sourciliere gauche (cut above left eyebrow)
+      var ps=new THREE.Mesh(new THREE.BoxGeometry(.06,.02,.02),BLOOD);
+      ps.position.x=-.07;ps.position.y=.05;ps.position.z=.135;headG.add(ps);
+      root.userData.woundObjs.push(ps);
+      // Sang coulant du sourcil
+      var sc3=new THREE.Mesh(new THREE.BoxGeometry(.015,.06,.015),BLOOD);
+      sc3.position.x=-.07;sc3.position.y=0;sc3.position.z=.135;headG.add(sc3);
+      root.userData.woundObjs.push(sc3);
+      // Hematome joue gauche
+      var hj=new THREE.Mesh(new THREE.SphereGeometry(.025,6,5),BRUISE);
+      hj.position.x=-.08;hj.position.y=-.02;hj.position.z=.10;headG.add(hj);
+      root.userData.woundObjs.push(hj);
+      // Ecorchures avant-bras droit
+      var ec2=new THREE.Mesh(new THREE.BoxGeometry(.02,.04,.02),WOUND);
+      ec2.position.y=-.15;ec2.position.z=.03;armGs[1].fg.add(ec2);
+      root.userData.woundObjs.push(ec2);
+    }
+    // OAP: no visible wounds, just cyanose/sueurs (handled by symptoms)
+  }
+  if(pos==='lying'){
+    root.rotation.x=Math.PI/2;root.rotation.z=.08;
+    root.position.x=.1;root.position.y=.30;root.position.z=0;root.scale.set(.95,.95,.95);
+    armGs.forEach(function(a){a.ag.rotation.z=a.side*.18;});headG.rotation.z=.15;
+  } else {
+    root.position.x=0;root.position.y=.46;root.position.z=-1.6;root.scale.set(.85,.85,.85);
+    legGs.forEach(function(l){l.hpG.rotation.x=-Math.PI/2;l.knG.rotation.x=Math.PI/2;});
+    torsoG.rotation.x=.12;headG.rotation.x=.05;
+    armGs.forEach(function(a){a.ag.rotation.x=.4;a.fg.rotation.x=-.3;});
+  }
+  return root;
+}
+function buildChair(){
+  var ch=new THREE.Group();var W=0x4a3520,W2=0x382818;
+  var s=mk(new THREE.BoxGeometry(.7,.08,.65),W);s.position.y=.46;ch.add(s);
+  var b=mk(new THREE.BoxGeometry(.7,.85,.07),W);b.position.y=.92;b.position.z=-.30;ch.add(b);
+  [[-0.30,0.27],[0.30,0.27],[-0.30,-0.27],[0.30,-0.27]].forEach(function(p){var l=mk(new THREE.BoxGeometry(.07,.46,.07),W2);l.position.x=p[0];l.position.y=.23;l.position.z=p[1];ch.add(l);});
+  return ch;
+}
+
+/* ========== SECOURISTES ========== */
+function buildSec(hCol){
+  var g=new THREE.Group();var SK=0xd4a888,SU=0x1a2238,SD=0x121a2c,PT=0x111728,BT=0x0a0a0a,RD=0xc41e1e;
+  function add(p,geo,col,x,y,z,sx,sy,sz){var m=mk(geo,col);if(x!==undefined){m.position.x=x;m.position.y=y;m.position.z=z;}if(sx)m.scale.set(sx,sy,sz);p.add(m);return m;}
+  add(g,new THREE.CylinderGeometry(.165,.18,.62,14),SU,0,.32,0);
+  add(g,new THREE.SphereGeometry(.17,12,10),SU,0,.42,.02,1,.7,.85);
+  add(g,new THREE.CylinderGeometry(.183,.183,.045,16),RD,0,.15,0);
+  add(g,new THREE.BoxGeometry(.12,.025,.01),0xffffff,0,.15,.184);
+  add(g,new THREE.CylinderGeometry(.18,.18,.04,16),0x222222,0,.07,0);
+  add(g,new THREE.CylinderGeometry(.16,.15,.18,12),PT,0,-.05,0);
+  add(g,new THREE.CylinderGeometry(.05,.06,.10,10),SK,0,.685,0);
+  add(g,new THREE.SphereGeometry(.105,14,12),SK,0,.81,0,1,1.1,1);
+  add(g,new THREE.SphereGeometry(.108,14,10,0,Math.PI*2,0,Math.PI*.45),0x2a1810,0,.84,-.005);
+  add(g,new THREE.SphereGeometry(.085,10,8),SK,0,.77,.015,1,.55,1);
+  [-1,1].forEach(function(s){add(g,new THREE.SphereGeometry(.014,8,6),0x1a2030,s*.038,.83,.092);});
+  add(g,new THREE.SphereGeometry(.020,8,6),SK,0,.808,.108,1,1.1,1);
+  add(g,new THREE.SphereGeometry(.115,16,10,0,Math.PI*2,0,Math.PI*.55),hCol,0,.83,-.005,1,1,1.05);
+  add(g,new THREE.BoxGeometry(.05,.03,.02),0xffd700,0,.875,.10);
+  // Backpack DIMATEX
+  add(g,new THREE.BoxGeometry(.36,.50,.20),RD,0,.30,-.22);
+  add(g,new THREE.BoxGeometry(.18,.13,.04),0x8a1212,0,.40,-.32);
+  add(g,new THREE.BoxGeometry(.05,.45,.025),0x8a1212,-.13,.35,-.04);
+  add(g,new THREE.BoxGeometry(.05,.45,.025),0x8a1212,.13,.35,-.04);
+  var armGs=[];
+  [-1,1].forEach(function(s){
+    var ag=new THREE.Group();ag.position.x=s*.22;ag.position.y=.55;g.add(ag);
+    add(ag,new THREE.CylinderGeometry(.052,.048,.18,10),SU,0,-.09,0);
+    add(ag,new THREE.CylinderGeometry(.046,.04,.18,10),SK,0,-.28,0);
+    var fg=new THREE.Group();fg.position.y=-.28;ag.add(fg);
+    add(fg,new THREE.CylinderGeometry(.045,.038,.20,10),SK,0,-.10,0);
+    add(fg,new THREE.BoxGeometry(.075,.10,.04),0x1a1a1a,0,-.27,0);
+    armGs.push({ag:ag,fg:fg,side:s});
+  });
+  var legGs=[];
+  [-1,1].forEach(function(s){
+    var lg=new THREE.Group();lg.position.x=s*.075;lg.position.y=-.135;g.add(lg);
+    add(lg,new THREE.CylinderGeometry(.07,.062,.32,12),PT,0,-.16,0);
+    add(lg,new THREE.BoxGeometry(.018,.32,.005),0xeeeeee,s*.07,-.16,0);
+    var kg=new THREE.Group();kg.position.y=-.32;lg.add(kg);
+    add(kg,new THREE.SphereGeometry(.062,10,8),PT,0,0,0);
+    var sg2=new THREE.Group();sg2.position.y=-.04;kg.add(sg2);
+    add(sg2,new THREE.CylinderGeometry(.055,.045,.28,10),PT,0,-.15,0);
+    add(sg2,new THREE.BoxGeometry(.10,.10,.20),BT,0,-.33,.04);
+    legGs.push({lg:lg,kg:kg,sg2:sg2,side:s});
+  });
+  g.userData={armGs:armGs,legGs:legGs,tX:0,tZ:2.8};return g;
+}
+
+var secs=[buildSec(0xff4400),buildSec(0xff6600),buildSec(0xff6600)];
+secs.forEach(function(s,i){s.position.x=i*1.5-1.5;s.position.y=.85;s.position.z=2.8;S.add(s);});
+
+var FFT_L=[[[1.5,2],[0,2.2],[-1.5,2.5]],[[.6,.8],[-.4,.8],[-.7,1.5]],[[.65,0],[-.55,0],[.1,-.7]],[[.65,0],[-.55,0],[.1,-.7]],[[.65,0],[-.55,0],[.1,-.7]],[[-1,.5],[-.4,.4],[.8,.5]]];
+var FFT_S=[[[1.5,2],[0,2.2],[-1.5,2.5]],[[.6,-.4],[-.5,-.4],[-.8,.2]],[[.85,-1.5],[-.85,-1.5],[0,-2.5]],[[.85,-1.5],[-.85,-1.5],[0,-2.5]],[[.85,-1.5],[-.85,-1.5],[0,-2.5]],[[-1,.5],[-.4,.4],[.8,.5]]];
+
+/* VSAV simple et propre */
+var vsavG=new THREE.Group();
+
+function addToV(geo,col,x,y,z){var m=mk(geo,col);m.position.x=x;m.position.y=y;m.position.z=z;vsavG.add(m);return m;}
+function addWheelV(x,z){
+  var tire=mk(new THREE.CylinderGeometry(.32,.32,.16,16),0x1a1a1a);
+  tire.rotation.x=Math.PI/2;tire.position.x=x;tire.position.y=.32;tire.position.z=z;vsavG.add(tire);
+  var rim=mk(new THREE.CylinderGeometry(.18,.18,.17,12),0x888888);
+  rim.rotation.x=Math.PI/2;rim.position.x=x;rim.position.y=.32;rim.position.z=z;vsavG.add(rim);
+}
+
+// Chassis
+addToV(new THREE.BoxGeometry(5.2,.12,2),0x222222,0,.2,0);
+// Caisse blanche
+addToV(new THREE.BoxGeometry(5.2,1,2),0xddddee,0,.76,0);
+// Cellule sanitaire arrière (plus haute)
+addToV(new THREE.BoxGeometry(2.8,1.6,2),0xddddee,-.5,1.56,0);
+// Cabine avant
+addToV(new THREE.BoxGeometry(1.6,1,1.95),0xccccdd,1.8,1.32,0);
+// Bande rouge SDMIS
+addToV(new THREE.BoxGeometry(5.22,.18,2.02),0xcc1100,0,.82,0);
+// Pare-brise
+var vwb=addToV(new THREE.BoxGeometry(.06,.55,1.6),0x88aacc,2.63,1.35,0);
+vwb.material=new THREE.MeshLambertMaterial({color:0x88aacc,transparent:true,opacity:0.4});
+// Toit cabine
+addToV(new THREE.BoxGeometry(1.6,.06,1.9),0xbbbbcc,1.8,1.85,0);
+// Toit cellule
+addToV(new THREE.BoxGeometry(2.8,.06,1.95),0xccccdd,-.5,2.38,0);
+// Portes arrière
+addToV(new THREE.BoxGeometry(.06,1.3,.9),0xccccdd,-1.92,1.5,.45);
+addToV(new THREE.BoxGeometry(.06,1.3,.9),0xccccdd,-1.92,1.5,-.45);
+addToV(new THREE.BoxGeometry(.06,1.32,.02),0x444444,-1.92,1.5,0); // joint central
+// Fenêtres cellule latérales
+var vw1=addToV(new THREE.BoxGeometry(.5,.35,.04),0x778899,.2,1.8,1.01);
+vw1.material=new THREE.MeshLambertMaterial({color:0x778899,transparent:true,opacity:0.35});
+var vw2=addToV(new THREE.BoxGeometry(.5,.35,.04),0x778899,-.8,1.8,1.01);
+vw2.material=new THREE.MeshLambertMaterial({color:0x778899,transparent:true,opacity:0.35});
+// Gyrophares
+var vg1=addToV(new THREE.BoxGeometry(.22,.1,.28),0x2255ff,1.2,2.44,0);
+vg1.material=new THREE.MeshLambertMaterial({color:0x2255ff,emissive:new THREE.Color(0x1133aa)});
+var vg2=addToV(new THREE.BoxGeometry(.22,.1,.28),0x2255ff,.3,2.44,0);
+vg2.material=new THREE.MeshLambertMaterial({color:0x2255ff,emissive:new THREE.Color(0x1133aa)});
+vsavG.userData.flash1=vg1;vsavG.userData.flash2=vg2;
+// Phares
+addToV(new THREE.BoxGeometry(.06,.1,.18),0xffffcc,2.62,.7,.55);
+addToV(new THREE.BoxGeometry(.06,.1,.18),0xffffcc,2.62,.7,-.55);
+// Feux arrière
+addToV(new THREE.BoxGeometry(.06,.1,.14),0xcc0000,-1.94,.7,.8);
+addToV(new THREE.BoxGeometry(.06,.1,.14),0xcc0000,-1.94,.7,-.8);
+// Pare-chocs
+addToV(new THREE.BoxGeometry(.1,.16,2.05),0x444444,2.65,.32,0);
+addToV(new THREE.BoxGeometry(.1,.14,2),0x444444,-1.95,.32,0);
+// Logo blanc "SDMIS"
+addToV(new THREE.BoxGeometry(.7,.08,.02),0xffffff,0,.82,1.02);
+// Croix de vie bleue
+addToV(new THREE.BoxGeometry(.04,.18,.03),0x2255ff,-.5,1.7,1.02);
+addToV(new THREE.BoxGeometry(.04,.03,.18),0x2255ff,-.5,1.7,1.02);
+// Roues
+addWheelV(1.7,.95);addWheelV(1.7,-.95);
+addWheelV(-1.5,.95);addWheelV(-1.5,-.95);
+
+vsavG.position.x=8;vsavG.rotation.y=-Math.PI/2;S.add(vsavG);
+
+/* Equipment */
+var daeM=mk(new THREE.BoxGeometry(.36,.09,.24),0xffaa00);daeM.position.x=.6;daeM.position.y=.16;daeM.position.z=-.25;daeM.visible=false;S.add(daeM);
+var maskM=mk(new THREE.SphereGeometry(.1,8,6),0x4488ff);maskM.material.transparent=true;maskM.material.opacity=.75;maskM.position.x=.2;maskM.position.y=.14;maskM.position.z=.2;maskM.visible=false;S.add(maskM);
+var pdM=mk(new THREE.BoxGeometry(1.85,.03,.48),0xff8800);pdM.position.y=.04;pdM.position.z=.85;pdM.visible=false;S.add(pdM);
+var brG=new THREE.Group();var brt=mk(new THREE.BoxGeometry(1.85,.04,.52),0x888896);brt.position.y=.36;brG.add(brt);brG.position.x=-1.8;brG.position.z=1.6;brG.visible=false;S.add(brG);
+
+/* ========== ORBIT ========== */
+canvas.addEventListener('mousedown',function(e){if(e.button===2)isRPan=true;else isDrag=true;lmx=e.clientX;lmy=e.clientY;e.preventDefault();});
+canvas.addEventListener('contextmenu',function(e){e.preventDefault();});
+window.addEventListener('mousemove',function(e){
+  if(isDrag){theta-=(e.clientX-lmx)*.005;phi=Math.max(.15,Math.min(1.1,phi-(e.clientY-lmy)*.005));lmx=e.clientX;lmy=e.clientY;}
+  if(isRPan){panX=Math.max(-3,Math.min(3,panX-(e.clientX-lmx)*.008));panY=Math.max(-1,Math.min(2,panY+(e.clientY-lmy)*.008));lmx=e.clientX;lmy=e.clientY;}
+});
+window.addEventListener('mouseup',function(){isDrag=false;isRPan=false;});
+canvas.addEventListener('wheel',function(e){rad=Math.max(2.5,Math.min(12,rad+e.deltaY*.014));e.preventDefault();},{passive:false});
+/* Basic touch support: 1 finger = orbit, 2 fingers = pinch zoom */
+var pinchDist=0;
+canvas.addEventListener('touchstart',function(e){if(e.touches.length===1){isDrag=true;lmx=e.touches[0].clientX;lmy=e.touches[0].clientY;}else if(e.touches.length===2){isDrag=false;pinchDist=Math.hypot(e.touches[0].clientX-e.touches[1].clientX,e.touches[0].clientY-e.touches[1].clientY);}e.preventDefault();},{passive:false});
+canvas.addEventListener('touchmove',function(e){
+  if(e.touches.length===1&&isDrag){theta-=(e.touches[0].clientX-lmx)*.005;phi=Math.max(.15,Math.min(1.1,phi-(e.touches[0].clientY-lmy)*.005));lmx=e.touches[0].clientX;lmy=e.touches[0].clientY;}
+  else if(e.touches.length===2){var d=Math.hypot(e.touches[0].clientX-e.touches[1].clientX,e.touches[0].clientY-e.touches[1].clientY);if(pinchDist)rad=Math.max(2.5,Math.min(12,rad+(pinchDist-d)*.02));pinchDist=d;}
+  e.preventDefault();
+},{passive:false});
+canvas.addEventListener('touchend',function(e){if(e.touches.length===0){isDrag=false;pinchDist=0;}},{passive:false});
+function updCam(){
+  var cx=Math.max(-7,Math.min(7,Math.sin(theta)*rad*Math.cos(phi)+panX));
+  var cy=Math.max(.4,rad*Math.sin(phi)+panY*.3);
+  var cz=Math.max(-6,Math.min(6,Math.cos(theta)*rad*Math.cos(phi)));
+  CAM.position.x=cx;CAM.position.y=cy;CAM.position.z=cz;CAM.lookAt(panX,Math.max(.3,panY*.15+(phi>.4?.9:.5)),0);
+}
+
+/* ========== BUBBLES ========== */
+var bubbleDiv=document.createElement('div');
+bubbleDiv.style.cssText='position:absolute;top:0;left:0;width:100%;height:100%;pointer-events:none;overflow:visible;z-index:30;';
+document.getElementById('v3').appendChild(bubbleDiv);
+
+secs.forEach(function(){
+  var b=document.createElement('div');b.className='cbubble cb-normal';
+  var inner=document.createElement('div');b.appendChild(inner);b.innerDiv=inner;
+  bubbleDiv.appendChild(b);bubbles.push({el:b,innerDiv:inner});
+});
+vicBubble=document.createElement('div');vicBubble.className='cbubble cb-normal';
+var vi2=document.createElement('div');vicBubble.appendChild(vi2);vicBubble.innerDiv=vi2;
+bubbleDiv.appendChild(vicBubble);
+
+var _tsV=new THREE.Vector3();
+function toScreen(x,y,z){_tsV.set(x,y,z);_tsV.project(CAM);var c=EL.v3;return{x:(_tsV.x*.5+.5)*c.clientWidth,y:(-.5*_tsV.y+.5)*c.clientHeight,z:_tsV.z};}
+
+function styleBubble(el,ty){el.className='cbubble';if(ty==='shout')el.classList.add('cb-shout');else if(ty==='shout-victim')el.classList.add('cb-shout','cb-shout-victim');else if(ty==='thought')el.classList.add('cb-thought');else if(ty==='sad')el.classList.add('cb-normal','cb-sad');else el.classList.add('cb-normal');}
+
+function triggerBubble(i,p,dur){if(!p||!bubbles[i])return;bubbleTimers[i]=(dur||5)*1000;bubbles[i].el.style.opacity='1';styleBubble(bubbles[i].el,p.ty||'normal');bubbles[i].innerDiv.textContent=p.t||p;}
+function triggerVicBubble(p,dur){if(!p||!vicBubble)return;vicBubbleTimer=(dur||6)*1000;vicBubble.style.opacity='1';styleBubble(vicBubble,p.ty||'normal');vicBubble.innerDiv.textContent=p.t||p;}
+
+var bubbleTimeouts=[];
+function clearBubbleTimeouts(){bubbleTimeouts.forEach(clearTimeout);bubbleTimeouts=[];}
+function triggerEventBubbles(idx){
+  if(!cKey||!COMIC[cKey])return;var rows=COMIC[cKey];var row=rows[Math.min(idx,rows.length-1)];if(!row)return;
+  // One at a time: chef 0s (5s), equipier1 6s (5s), equipier2 12s (5s), victime 18s (6s)
+  if(row[0])triggerBubble(0,row[0],5);
+  if(row[1])bubbleTimeouts.push(setTimeout(function(){triggerBubble(1,row[1],5);},6000));
+  if(row[2])bubbleTimeouts.push(setTimeout(function(){triggerBubble(2,row[2],5);},12000));
+  if(row[3])bubbleTimeouts.push(setTimeout(function(){triggerVicBubble(row[3],6);},18000));
+}
+
+/* ========== VICTIM SYMPTOMS (skin color changes) ========== */
+// Colors: normal=#d4a888, cyanose=#7a8aaa, paleur=#c8beb5, marbrure=#b89a88, sueur=shiny
+var SKIN_NORMAL = new THREE.Color(0xd4a888);
+var SKIN_CYANOSE = new THREE.Color(0x7a8aaa);  // blueish grey
+var SKIN_PALEUR = new THREE.Color(0xc8c0b8);   // pale/ashen
+var SKIN_MARBRURE = new THREE.Color(0xb09080);  // mottled/grey-pink
+var SKIN_SUEUR = new THREE.Color(0xe0c8a0);     // yellowish sheen (sweating)
+
+// Per case, per phase: {color, sweat(bool)}
+var SYMPTOMS = {
+  acr:[
+    {col:SKIN_CYANOSE,  sweat:false}, // arrivee: cyanose (ACR)
+    {col:SKIN_CYANOSE,  sweat:false}, // bilan
+    {col:SKIN_CYANOSE,  sweat:true},  // RCP: still cyanotic + sweat from compressions
+    {col:SKIN_MARBRURE, sweat:true},  // defib: marbrures
+    {col:SKIN_PALEUR,   sweat:true},  // RACS: pale but improving
+    {col:SKIN_NORMAL,   sweat:false}  // transport: back to normal
+  ],
+  trauma:[
+    {col:SKIN_PALEUR,   sweat:true},  // arrivee: paleur + sueurs (choc hemorragique)
+    {col:SKIN_PALEUR,   sweat:true},  // bilan
+    {col:SKIN_PALEUR,   sweat:true},  // garrot
+    {col:SKIN_PALEUR,   sweat:false}, // stifneck
+    {col:SKIN_MARBRURE, sweat:false}, // plan dur
+    {col:SKIN_PALEUR,   sweat:false}, // chest seal
+    {col:SKIN_PALEUR,   sweat:false}, // MID
+    {col:SKIN_NORMAL,   sweat:false}  // transport
+  ],
+  avp:[
+    {col:SKIN_PALEUR,   sweat:true},  // incarcere: paleur + sueurs
+    {col:SKIN_PALEUR,   sweat:true},  // contact
+    {col:SKIN_PALEUR,   sweat:true},  // O2
+    {col:SKIN_PALEUR,   sweat:false}, // morphine/bilan
+    {col:SKIN_PALEUR,   sweat:false}, // desinca
+    {col:SKIN_MARBRURE, sweat:false}, // strapping
+    {col:SKIN_NORMAL,   sweat:false}, // extraction
+    {col:SKIN_NORMAL,   sweat:false}  // transport
+  ],
+  oap:[
+    {col:SKIN_CYANOSE,  sweat:true},  // arrivee: cyanose + sueurs profuses (OAP)
+    {col:SKIN_CYANOSE,  sweat:true},  // bilan: cyanose peribuccale
+    {col:SKIN_CYANOSE,  sweat:true},  // position
+    {col:SKIN_MARBRURE, sweat:true},  // O2: improving but still sweaty
+    {col:SKIN_PALEUR,   sweat:false}, // bilan secondaire
+    {col:SKIN_NORMAL,   sweat:false}, // stables
+    {col:SKIN_NORMAL,   sweat:false}  // transport
+  ]
+};
+
+// Sweat effect: subtle shiny material on victim instead of floating particles
+var sweatDots = [];
+function createSweatDots(){
+  for(var i=0;i<20;i++){
+    var dot = new THREE.Mesh(
+      new THREE.SphereGeometry(0.008,4,4),
+      new THREE.MeshBasicMaterial({color:0xffffff, transparent:true, opacity:0.25})
+    );
+    dot.visible = false;
+    S.add(dot);
+    sweatDots.push({mesh:dot, ox:(Math.random()-0.5)*0.35, oy:Math.random()*0.6, oz:(Math.random()-0.5)*0.25, phase:Math.random()*Math.PI*2});
+  }
+}
+createSweatDots();
+
+function applySymptoms(phaseIdx){
+  if(!cKey || !SYMPTOMS[cKey] || !humanRoot) return;
+  var symp = SYMPTOMS[cKey][Math.min(phaseIdx, SYMPTOMS[cKey].length-1)];
+  if(!symp) return;
+  var targetCol = symp.col;
+  var parts = humanRoot.userData.skinParts;
+  if(parts){
+    parts.forEach(function(p){
+      if(p.material && p.material.color) p.material.color.lerp(targetCol, 0.08);
+    });
+  }
+  // Sweat: tiny white dots stuck close to skin surface
+  var vicX, vicY, vicZ;
+  if(cData && cData.pos === 'sitting'){vicX=0;vicY=0.85;vicZ=-1.6;}
+  else{vicX=0.1;vicY=0.45;vicZ=0;}
+  sweatDots.forEach(function(sd,i){
+    sd.mesh.visible = symp.sweat;
+    if(symp.sweat){
+      // Stick close to body, slight shimmer
+      sd.mesh.position.x = vicX + sd.ox;
+      sd.mesh.position.y = vicY + sd.oy;
+      sd.mesh.position.z = vicZ + sd.oz;
+      sd.mesh.material.opacity = 0.15 + Math.sin(lastTS * 0.003 + sd.phase) * 0.12;
+    }
+  });
+}
+
+/* ========== NAV ========== */
+function goToSelect(){document.getElementById('home').style.display='none';document.getElementById('sel').style.display='flex';}
+function backToHome(){document.getElementById('sel').style.display='none';document.getElementById('home').style.display='flex';cKey=null;document.querySelectorAll('.cc').forEach(function(c){c.classList.remove('sel');});document.getElementById('lb').disabled=true;document.getElementById('lb').textContent='SELECTIONNEZ UN CAS';}
+function sel(k){cKey=k;document.querySelectorAll('.cc').forEach(function(c){c.classList.remove('sel');});document.getElementById('cc-'+k).classList.add('sel');document.getElementById('lb').disabled=false;document.getElementById('lb').textContent='LANCER - '+CASES[k].tag;}
+function launch(){if(!cKey)return;cData=CASES[cKey];document.getElementById('sel').style.display='none';document.getElementById('sim').style.display='flex';resizeR();initSim();}
+function goMenu(){running=false;paused=false;appEq=[];clearBubbleTimeouts();if(humanRoot){S.remove(humanRoot);humanRoot=null;}if(chairObj){S.remove(chairObj);chairObj=null;}clearRoom();sweatDots.forEach(function(sd){sd.mesh.visible=false;});vicBubbleTimer=0;if(vicBubble)vicBubble.style.opacity='0';bubbleTimers=[0,0,0];bubbles.forEach(function(b){if(b&&b.el)b.el.style.opacity='0';});document.getElementById('sim').style.display='none';document.getElementById('home').style.display='flex';cKey=null;hidePopup();}
+
+function initSim(){
+  clearBubbleTimeouts();
+  sTime=0;spd=1;paused=false;running=true;curPh=-1;lastEv=-1;appEq=[];ANI_cprActive=false;ANI_kneeling=[false,false,false];
+  daeM.visible=false;maskM.visible=false;pdM.visible=false;brG.visible=false;racsL.intensity=0;
+  vicBubbleTimer=0;if(vicBubble)vicBubble.style.opacity='0';bubbleTimers=[0,0,0];
+  bubbles.forEach(function(b){if(b&&b.el)b.el.style.opacity='0';});
+  sweatDots.forEach(function(sd){sd.mesh.visible=false;});
+  EL.ll.innerHTML='';EL.al2.innerHTML='';EL.em.innerHTML='';EL.mc.textContent='0';EL.pf.style.width='0%';
+  EL.pbtn.textContent='PAUSE';setSpd(1);
+  var prE=EL.pr;prE.innerHTML='';phaseEls=[];
+  cData.phases.forEach(function(p,i){var d=document.createElement('div');d.className='pi';d.id='pi'+i;d.textContent=p;prE.appendChild(d);phaseEls.push(d);});
+  renderV(0);renderM();
+  // Clear previous scene + human + chair
+  clearRoom();
+  if(humanRoot)S.remove(humanRoot);if(chairObj){S.remove(chairObj);chairObj=null;}
+  // Build scene per case
+  if(cKey==='acr') buildScene_ACR();
+  else if(cKey==='trauma') buildScene_TRAUMA();
+  else if(cKey==='avp') buildScene_AVP();
+  else if(cKey==='oap') buildScene_OAP();
+  // Add lamps
+  var l1=new THREE.PointLight(0xfffaee,1.2,8);l1.position.x=-4;l1.position.y=2.55;l1.position.z=-4;S.add(l1);roomObjs.push(l1);
+  var l2=new THREE.PointLight(0xfffaee,1.2,8);l2.position.x=4;l2.position.y=2.55;l2.position.z=-4;S.add(l2);roomObjs.push(l2);
+  // Build human with case context
+  window._currentCase=cKey;
+  humanRoot=buildHuman(cData.pos);S.add(humanRoot);
+  // AVP: victim sits in car (no separate chair, position adjusted)
+  if(cKey==='avp'){
+    // Victim is inside car, no chair needed
+    humanRoot.position.x=-.3;humanRoot.position.y=.55;humanRoot.position.z=-1.6;
+  }
+  // OAP: victim on chair at bedside
+  if(cData.pos==='sitting'&&cKey!=='avp'){
+    chairObj=buildChair();chairObj.position.z=-1.6;S.add(chairObj);
+  }
+  // Reset secouristes
+  secs.forEach(function(s,i){s.position.x=i*1.5-1.5;s.position.y=.85;s.position.z=2.8;s.userData.tX=i*1.5-1.5;s.userData.tZ=2.8;});
+  // Camera per case
+  if(cKey==='acr'){theta=.5;phi=.4;rad=5.5;panX=0;panY=0;}
+  else if(cKey==='trauma'){theta=.6;phi=.45;rad=7;panX=0;panY=0;}
+  else if(cKey==='avp'){theta=.4;phi=.35;rad=6;panX=0;panY=-.5;}
+  else if(cKey==='oap'){theta=.28;phi=.36;rad=4.5;panX=0;panY=-1.1;}
+}
+
+function renderV(ph){var d=cData.vitals[Math.min(ph,cData.vitals.length-1)];document.getElementById('vg').innerHTML=d.map(function(v){return '<div class="vb"><div class="vl">'+v.l+'</div><div class="vv '+v.c+'">'+v.v+'</div><div class="vu">'+v.u+'</div></div>';}).join('');}
+function renderM(){document.getElementById('mr2').innerHTML=cData.march.map(function(r){return '<div class="mr"><span class="mk">'+r.k+'</span><span class="mv">'+r.l+' '+r.v+'</span><span class="ms '+r.s+'">'+(r.s==='mok'?'OK':r.s==='mwa'?'!':'X')+'</span></div>';}).join('');}
+
+function applyEq(keys){keys.forEach(function(k){if(appEq.indexOf(k)>=0)return;appEq.push(k);var z=EZ[k];if(!z)return;var ns='http://www.w3.org/2000/svg',g=document.getElementById('em');var c=document.createElementNS(ns,'circle');c.setAttribute('cx',z.x);c.setAttribute('cy',z.y);c.setAttribute('r',7);c.setAttribute('fill',z.c+'55');c.setAttribute('stroke',z.c);c.setAttribute('stroke-width','1.5');c.classList.add('za');g.appendChild(c);var t=document.createElementNS(ns,'text');t.setAttribute('x',z.x);t.setAttribute('y',z.y-10);t.setAttribute('text-anchor','middle');t.setAttribute('font-size','6.5');t.setAttribute('fill',z.c);t.setAttribute('font-family','monospace');t.textContent=z.l;g.appendChild(t);document.getElementById('mc').textContent=appEq.length;});}
+
+function apply3D(ph){
+  var FF=(cData&&cData.pos==='sitting')?FFT_S:FFT_L;var t=FF[Math.min(ph,FF.length-1)];
+  secs.forEach(function(s,i){s.userData.tX=t[i][0];s.userData.tZ=t[i][1];});
+  ANI_kneeling=[ph>=2,ph>=2&&ph<5,false];ANI_cprActive=false;
+}
+
+function showPopup(ev){var p=document.getElementById('pp');document.getElementById('ppw').textContent=ev.who==='cd'?'CODIS':'EQUIPE';document.getElementById('ppt').textContent=ev.txt;var em=document.getElementById('ppm');if(ev.mat){em.style.display='block';em.textContent=ev.mat.n+' - '+ev.mat.d;}else em.style.display='none';p.style.display='block';clearTimeout(p._t);p._t=setTimeout(function(){p.style.display='none';},6000);}
+function hidePopup(){document.getElementById('pp').style.display='none';}
+
+function addLog(ev,i){var log=document.getElementById('ll');var el=document.createElement('div');el.className='le ac2';var mm=String(Math.floor(ev.t/60)).padStart(2,'0'),ss=String(ev.t%60).padStart(2,'0');el.innerHTML='<span class="lt">'+mm+':'+ss+'</span><span class="lw we">EQ</span><span class="lx">'+ev.txt+(ev.mat?'<div class="lm">'+ev.mat.n+' - '+ev.mat.d+'</div>':'')+'</span>';log.appendChild(el);log.scrollTop=log.scrollHeight;}
+
+/* ========== MAIN LOOP ========== */
+function loop(ts){
+  requestAnimationFrame(loop);
+  var dt=lastTS?Math.min((ts-lastTS)/1000,.05):0;lastTS=ts;
+  // Skip all 3D work when the sim view is hidden (home/select screens)
+  if(EL.sim.style.display==='none')return;
+  if(running&&!paused){sTime+=dt*spd;if(cData&&sTime>cData.total)sTime=cData.total;}
+  if(running&&cData){
+    var t=sTime,cph=0;
+    cData.events.forEach(function(ev){if(t>=ev.t)cph=ev.ph;});
+    if(cph!==curPh){curPh=cph;phaseEls.forEach(function(el,i){el.className='pi'+(i<cph?' dn':i===cph?' ac':'');});renderV(cph);EL.p3.textContent=cData.phases[cph]||'';}
+    cData.events.forEach(function(ev,i){if(t>=ev.t&&i>lastEv){lastEv=i;addLog(ev,i);showPopup(ev);apply3D(ev.ph);if(ev.eq&&ev.eq.length)applyEq(ev.eq);triggerEventBubbles(i);}});
+    EL.tm.textContent=String(Math.floor(t/60)).padStart(2,'0')+':'+String(Math.floor(t%60)).padStart(2,'0');
+    EL.pf.style.width=(t/cData.total*100)+'%';
+  }
+  /* Secouristes animation */
+  secs.forEach(function(sec,si){
+    var ud=sec.userData,tX=ud.tX,tZ=ud.tZ;
+    var dx=tX-sec.position.x,dz=tZ-sec.position.z,dist=Math.sqrt(dx*dx+dz*dz),moving=dist>.04;
+    if(moving){sec.position.x+=dx*.04;sec.position.z+=dz*.04;sec.rotation.y=Math.atan2(dx,dz);}
+    ANI_walkPhase[si]+=(moving?.18:0);var wp=ANI_walkPhase[si],kn=ANI_kneeling[si];
+    sec.position.y+=((kn?.45:.85)-sec.position.y)*.08;
+    var ag=ud.armGs,lg=ud.legGs;if(!ag||!lg)return;
+    if(moving){lg.forEach(function(l,i2){l.lg.rotation.x=Math.sin(wp+i2*Math.PI)*.45;l.kg.rotation.x=Math.max(0,Math.sin(wp+i2*Math.PI+.4)*.5);});ag.forEach(function(a,i2){a.ag.rotation.x=Math.sin(wp+Math.PI+i2*Math.PI)*.35;a.ag.position.y=.55;});}
+    else if(kn&&si<2){var wt=ts*.004+si;ag.forEach(function(a,i2){a.ag.rotation.x=-(0.8+Math.sin(wt+i2)*.2);a.ag.position.y=.55;});lg.forEach(function(l){l.lg.rotation.x=-Math.PI*.38;l.kg.rotation.x=Math.PI*.42;});}
+    else{ag.forEach(function(a){a.ag.rotation.x=Math.sin(ts*.0015+si)*.05;a.ag.position.y=.55;});lg.forEach(function(l){l.lg.rotation.x=0;l.kg.rotation.x=0;});}
+    if(!moving&&running&&cData){var vX=cData.pos==='sitting'?0:.1,vZ=cData.pos==='sitting'?-1.6:0;sec.rotation.y=Math.atan2(vX-sec.position.x,vZ-sec.position.z);}
+  });
+  /* Breathing + symptoms */
+  if(humanRoot&&running&&cData){
+    var br=1+Math.sin(ts*(curPh>=4?.003:.0005))*(curPh>=4?.018:.005);
+    if(humanRoot.userData.torsoG){humanRoot.userData.torsoG.scale.x=br;humanRoot.userData.torsoG.scale.z=br*1.3;}
+    applySymptoms(curPh);
+  }
+  if(racsL.intensity>0)racsL.intensity=2.5+Math.sin(ts*.009)*.7;
+  // VSAV gyrophares alternés
+  if(vsavG.userData.flash1){
+    var f=Math.sin(ts*.015)>.0;
+    vsavG.userData.flash1.material.emissive.setHex(f?0x2255ff:0x001133);
+    vsavG.userData.flash2.material.emissive.setHex(f?0x001133:0x2255ff);
+  }
+  /* Bubbles */
+  if(running){
+    var cr=EL.v3.getBoundingClientRect();
+    secs.forEach(function(sec,i){if(!bubbles[i])return;if(bubbleTimers[i]>0){bubbleTimers[i]-=dt*1000;if(bubbleTimers[i]<=0)bubbles[i].el.style.opacity='0';}var sc=toScreen(sec.position.x,sec.position.y+1.05,sec.position.z);if(sc.z>1){bubbles[i].el.style.opacity='0';return;}var bw=bubbles[i].el.offsetWidth||140,bh=bubbles[i].el.offsetHeight||60;bubbles[i].el.style.left=Math.max(5,Math.min(cr.width-bw-5,sc.x-bw/2))+'px';bubbles[i].el.style.top=Math.max(5,sc.y-bh-25)+'px';});
+    if(vicBubble){if(vicBubbleTimer>0){vicBubbleTimer-=dt*1000;if(vicBubbleTimer<=0)vicBubble.style.opacity='0';}if(humanRoot&&vicBubble.style.opacity!=='0'){var vx2=cData.pos==='sitting'?0:.1,vz2=cData.pos==='sitting'?-1.6:0,vy2=cData.pos==='sitting'?1.55:.5;var vs3=toScreen(vx2,vy2,vz2);if(vs3.z>1){vicBubble.style.opacity='0';}else{var vbw=vicBubble.offsetWidth||160,vbh=vicBubble.offsetHeight||60;vicBubble.style.left=Math.max(5,Math.min(cr.width-vbw-5,vs3.x-vbw/2))+'px';vicBubble.style.top=Math.max(5,vs3.y-vbh-25)+'px';}}}
+  }
+  updCam();renderer.render(S,CAM);
+}
+requestAnimationFrame(loop);
+
+function resizeR(){var c=document.getElementById('v3');var w=c.clientWidth,h=c.clientHeight;if(w<1||h<1)return;renderer.setSize(w,h);renderer.setPixelRatio(Math.min(window.devicePixelRatio||1,2));CAM.aspect=w/h;CAM.updateProjectionMatrix();}
+function setSpd(s){spd=s;var idx=[.5,1,2].indexOf(s);if(idx<0)return;document.querySelectorAll('.sb').forEach(function(b,i){b.classList.toggle('on',i===idx);});}
+function togglePause(){paused=!paused;document.getElementById('pbtn').textContent=paused?'PLAY':'PAUSE';}
+window.addEventListener('resize',resizeR);resizeR();
+</script>
+</body>
+</html>
