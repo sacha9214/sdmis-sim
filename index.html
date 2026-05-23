@@ -429,128 +429,135 @@ function buildScene_TRAUMA(){
 function buildScene_AVP(){
   // Route
   addR(new THREE.PlaneGeometry(30,24),0x2a2a2a,0,0,0,-Math.PI/2);
-  // Marquages centraux
   for(var i=-5;i<=5;i++) addR(new THREE.BoxGeometry(.15,.01,1),0xffffff,0,.02,i*2.2);
-  // Bandes laterales
   addR(new THREE.BoxGeometry(.2,.01,24),0xffffff,-6,.02,0);
   addR(new THREE.BoxGeometry(.2,.01,24),0xffffff,6,.02,0);
-  // Trottoirs
   addR(new THREE.BoxGeometry(3,.18,24),0x777777,-8.5,.09,0);
   addR(new THREE.BoxGeometry(3,.18,24),0x777777,8.5,.09,0);
 
-  // ═══ VOITURE ACCIDENTEE (groupe) ═══
+  // ═══ VOITURE ACCIDENTÉE ═══
+  // Longueur axe X (avant local=-2.2, arrière=+2.2), largeur Z (±0.92)
+  // rotation.y=PI → côté conducteur (local z=-0.92) face caméra (+Z monde)
   var car=new THREE.Group();
-  // Soubassement
-  mk2(car,new THREE.BoxGeometry(4.4,.1,1.8),0x111111,0,.05,0);
-  // Carrosserie basse (ailes + bas de caisse)
-  mk2(car,new THREE.BoxGeometry(4.4,.65,1.8),0x2244aa,0,.42,0);
-  // Passage de roues (creux visuels — couleur sombre)
-  mk2(car,new THREE.BoxGeometry(.6,.3,.08),0x111111,-1.3,.25,.91);
-  mk2(car,new THREE.BoxGeometry(.6,.3,.08),0x111111,-1.3,.25,-.91);
-  mk2(car,new THREE.BoxGeometry(.6,.3,.08),0x111111,1.3,.25,.91);
-  mk2(car,new THREE.BoxGeometry(.6,.3,.08),0x111111,1.3,.25,-.91);
-  // Capot (plat, légèrement enfoncé côté impact)
-  mk2(car,new THREE.BoxGeometry(1.3,.05,1.7),0x2040aa,-1.8,.78,0);
-  // Coffre arrière
-  mk2(car,new THREE.BoxGeometry(1,.05,1.7),0x2244aa,1.7,.78,0);
-  // Habitacle (vitre = transparent)
-  // Bas de caisse habitacle
-  mk2(car,new THREE.BoxGeometry(2.0,0.55,1.75),0x1a2a44,-.1,1.08,0);
-  // Custode/vitres (légèrement rentrant par rapport aux portières)
-  mk2(car,new THREE.BoxGeometry(1.8,0.5,1.65),0x1e2f50,-.1,1.52,0);
-  // Toit (couvre du montant A au montant C : x≈-1.7 à 0.85, longueur≈2.55)
-  mk2(car,new THREE.BoxGeometry(2.55,0.12,1.62),0x2244aa,-.43,1.78,0);
-  // Montants A (avant, alignés avec le pare-brise)
-  mk2(car,new THREE.BoxGeometry(.06,.5,.06),0x2244aa,-1.7,1.0,.78);
-  mk2(car,new THREE.BoxGeometry(.06,.5,.06),0x2244aa,-1.7,1.0,-.78);
-  // Montants B (milieu)
-  mk2(car,new THREE.BoxGeometry(.06,.5,.06),0x2244aa,0,1.0,.78);
-  mk2(car,new THREE.BoxGeometry(.06,.5,.06),0x2244aa,0,1.0,-.78);
-  // Montants C (arrière, alignés avec la lunette)
-  mk2(car,new THREE.BoxGeometry(.06,.5,.06),0x2244aa,.8,1.0,.78);
-  mk2(car,new THREE.BoxGeometry(.06,.5,.06),0x2244aa,.8,1.0,-.78);
-  // Pare-brise avant (semi-transparent) — mince en X, large en Z (largeur voiture)
-  var wpb=mk2(car,new THREE.BoxGeometry(0.06,0.6,1.7),0x99aabb,-1.05,1.1,0);
-  wpb.rotation.z=-0.35; // incliné comme un vrai pare-brise
-  wpb.material=new THREE.MeshLambertMaterial({color:0x99aabb,transparent:true,opacity:0.35});
-  // Fissures pare-brise
-  mk2(car,new THREE.BoxGeometry(.02,.008,.35),0xffffff,-1.05,1.2,.2);
-  mk2(car,new THREE.BoxGeometry(.02,.008,.2),0xdddddd,-1.0,1.0,-.15);
-  // Lunette arrière — mince en X, large en Z
-  var wla=mk2(car,new THREE.BoxGeometry(0.06,0.45,1.6),0x778899,.85,1.1,0);
-  wla.rotation.z=0.3;
-  wla.material=new THREE.MeshLambertMaterial({color:0x778899,transparent:true,opacity:0.4});
-  // Vitres latérales droites (intactes, semi-transparent) — minces en Z, longues en X
-  var vd1=mk2(car,new THREE.BoxGeometry(1,.4,.04),0x778899,-.55,1.05,.89);
-  vd1.material=new THREE.MeshLambertMaterial({color:0x778899,transparent:true,opacity:0.35});
-  var vd2=mk2(car,new THREE.BoxGeometry(.65,.4,.04),0x778899,.45,1.05,.89);
-  vd2.material=new THREE.MeshLambertMaterial({color:0x778899,transparent:true,opacity:0.35});
-  // Vitres latérales gauches (côté conducteur — brisées/sombres)
-  var vg1=mk2(car,new THREE.BoxGeometry(1,.4,.04),0x445566,-.55,1.05,-.89);
-  vg1.material=new THREE.MeshLambertMaterial({color:0x445566,transparent:true,opacity:0.25});
-  // Portière conducteur ENFONCÉE (gauche, z=-0.9, flush avec le corps) — mince en Z
-  var pg=mk2(car,new THREE.BoxGeometry(1,.65,.04),0x1a3088,-.55,.72,-.9);
-  pg.rotation.y=0.12;pg.position.z=-0.86; // panneau poussé/voilé vers l'intérieur
-  // Tôle froissée avant-gauche (zone d'impact)
-  var cr1=mk2(car,new THREE.BoxGeometry(.5,.55,.06),0x1a3088,-1.5,.5,-.88);
-  cr1.rotation.z=0.25;cr1.rotation.y=-0.2;
-  var cr2=mk2(car,new THREE.BoxGeometry(.3,.35,.05),0x16276f,-1.7,.4,-.8);
-  cr2.rotation.z=0.4;
-  // Portière arrière gauche
-  mk2(car,new THREE.BoxGeometry(.65,.6,.04),0x2244aa,.45,.72,-.9);
-  // Phares avant
-  mk2(car,new THREE.BoxGeometry(.05,.1,.22),0xffffcc,-2.2,.55,.7); // intact
-  mk2(car,new THREE.BoxGeometry(.05,.1,.22),0xffaa33,-2.2,.55,-.7); // cassé
-  // Calandre (largeur proche de la voiture)
-  mk2(car,new THREE.BoxGeometry(.05,.2,1.7),0x333333,-2.2,.5,0);
-  // Feux arrière
-  mk2(car,new THREE.BoxGeometry(.05,.1,.18),0xcc0000,2.2,.55,.72);
-  mk2(car,new THREE.BoxGeometry(.05,.1,.18),0xcc0000,2.2,.55,-.72);
-  // Pare-chocs avant
-  mk2(car,new THREE.BoxGeometry(.12,.15,1.85),0x333333,-2.22,.3,0);
-  // Pare-chocs arrière
-  mk2(car,new THREE.BoxGeometry(.12,.15,1.8),0x333333,2.22,.3,0);
-  // Rétroviseur droit (intact)
-  mk2(car,new THREE.BoxGeometry(.12,.08,.04),0x222222,-.6,.95,.95);
-  // Rétro gauche arraché au sol (dans la scène, pas dans le groupe car)
-  addR(new THREE.BoxGeometry(.1,.06,.03),0x222222,1.5,.02,-.3);
-  // Roues — cylindres couchés correctement
-  function carWheel(cx,cz){
-    var t=mk(new THREE.CylinderGeometry(.28,.28,.14,16),0x1a1a1a);
-    t.rotation.x=Math.PI/2;t.position.x=cx;t.position.y=.28;t.position.z=cz;car.add(t);
-    var r=mk(new THREE.CylinderGeometry(.16,.16,.15,10),0x888888);
-    r.rotation.x=Math.PI/2;r.position.x=cx;r.position.y=.28;r.position.z=cz;car.add(r);
-  }
-  carWheel(-1.35,.97);carWheel(-1.35,-.97);
-  carWheel(1.35,.97);carWheel(1.35,-.97);
-  // Plaques immatriculation (plaque française ~0.52m de large)
-  mk2(car,new THREE.BoxGeometry(0.04,0.11,0.52),0xffffff,-2.25,.22,0);
-  mk2(car,new THREE.BoxGeometry(0.04,0.11,0.52),0xffffff,2.25,.22,0);
-  // Poignées de porte
-  mk2(car,new THREE.BoxGeometry(.02,.03,.08),0xaaaaaa,-.3,.78,.92);
-  mk2(car,new THREE.BoxGeometry(.02,.03,.08),0xaaaaaa,.6,.78,.92);
+  var CB=0x1e3a8a,CBD=0x152d6e;
 
-  // Positionner la voiture dans la scène
-  car.rotation.y = Math.PI;
+  // Soubassement
+  mk2(car,new THREE.BoxGeometry(4.4,.1,1.84),0x111111,0,.13,0);
+  // Carrosserie basse
+  mk2(car,new THREE.BoxGeometry(4.4,.58,1.84),CB,0,.51,0);
+  // Capot
+  var hood=mk2(car,new THREE.BoxGeometry(1.45,.07,1.72),0x1c3580,-1.72,.83,0);
+  hood.rotation.z=-.06;
+  // Coffre
+  var trunk=mk2(car,new THREE.BoxGeometry(1.05,.07,1.68),CB,1.72,.8,0);
+  trunk.rotation.z=.05;
+  // Ceinture habitacle
+  mk2(car,new THREE.BoxGeometry(2.2,.52,1.8),CB,-.05,1.08,0);
+  // Greenhouse (vitres)
+  var gh=mk2(car,new THREE.BoxGeometry(1.9,.52,1.72),0x18284e,-.05,1.5,0);
+  gh.material=new THREE.MeshLambertMaterial({color:0x18284e,transparent:true,opacity:0.75});
+  // Toit
+  mk2(car,new THREE.BoxGeometry(1.72,.12,1.64),CB,-.1,1.79,0);
+  // Montants A
+  mk2(car,new THREE.BoxGeometry(.07,.58,.07),CB,-1.06,1.22,.82);
+  mk2(car,new THREE.BoxGeometry(.07,.58,.07),CB,-1.06,1.22,-.82);
+  // Montants B
+  mk2(car,new THREE.BoxGeometry(.07,.56,.07),CB,.18,1.22,.82);
+  mk2(car,new THREE.BoxGeometry(.07,.56,.07),CB,.18,1.22,-.82);
+  // Montants C
+  mk2(car,new THREE.BoxGeometry(.07,.54,.07),CB,.88,1.21,.82);
+  mk2(car,new THREE.BoxGeometry(.07,.54,.07),CB,.88,1.21,-.82);
+
+  // Pare-brise (fin en X, large en Z, incliné vers arrière)
+  var wpb=mk2(car,new THREE.BoxGeometry(.055,.72,1.62),0x8899bb,-1.06,1.28,0);
+  wpb.rotation.z=.26;
+  wpb.material=new THREE.MeshLambertMaterial({color:0x8899bb,transparent:true,opacity:0.3});
+  mk2(car,new THREE.BoxGeometry(.015,.008,.3),0xffffff,-1.06,1.4,.22);
+  mk2(car,new THREE.BoxGeometry(.015,.008,.22),0xdddddd,-1.09,1.18,-.14);
+  // Lunette arrière
+  var wla=mk2(car,new THREE.BoxGeometry(.055,.58,1.54),0x778899,.88,1.28,0);
+  wla.rotation.z=-.24;
+  wla.material=new THREE.MeshLambertMaterial({color:0x778899,transparent:true,opacity:0.38});
+
+  // Vitres passager (droite z=+0.92)
+  var vd1=mk2(car,new THREE.BoxGeometry(.95,.42,.04),0x7799aa,-.44,1.27,.91);
+  vd1.material=new THREE.MeshLambertMaterial({color:0x7799aa,transparent:true,opacity:0.42});
+  var vd2=mk2(car,new THREE.BoxGeometry(.65,.4,.04),0x7799aa,.56,1.27,.91);
+  vd2.material=new THREE.MeshLambertMaterial({color:0x7799aa,transparent:true,opacity:0.42});
+  // Vitres conducteur (gauche z=-0.92) brisées — face caméra après rotation
+  var vgc1=mk2(car,new THREE.BoxGeometry(.95,.42,.04),0x334455,-.44,1.27,-.91);
+  vgc1.material=new THREE.MeshLambertMaterial({color:0x334455,transparent:true,opacity:0.18});
+  var vgc2=mk2(car,new THREE.BoxGeometry(.65,.4,.04),0x445566,.56,1.27,-.91);
+  vgc2.material=new THREE.MeshLambertMaterial({color:0x445566,transparent:true,opacity:0.22});
+
+  // Portières passager (z=+0.92)
+  mk2(car,new THREE.BoxGeometry(.95,.66,.04),CB,-.44,.76,.92);
+  mk2(car,new THREE.BoxGeometry(.65,.64,.04),CB,.56,.76,.92);
+  mk2(car,new THREE.BoxGeometry(.02,.04,.1),0xbbbbbb,-.12,.76,.93);
+  mk2(car,new THREE.BoxGeometry(.02,.04,.1),0xbbbbbb,.75,.76,.93);
+  // Portière conducteur avant (impactée)
+  var pdcond=mk2(car,new THREE.BoxGeometry(.95,.66,.05),CBD,-.44,.76,-.9);
+  pdcond.rotation.y=.13;
+  // Portière conducteur arrière
+  mk2(car,new THREE.BoxGeometry(.65,.64,.04),CB,.56,.76,-.92);
+
+  // Tôle froissée avant-gauche
+  var tf1=mk2(car,new THREE.BoxGeometry(.52,.58,.07),CBD,-1.65,.58,-.86);
+  tf1.rotation.z=.22;tf1.rotation.y=-.12;
+  var tf2=mk2(car,new THREE.BoxGeometry(.36,.48,.06),0x122060,-1.84,.52,-.76);
+  tf2.rotation.z=.38;
+
+  // Phares
+  mk2(car,new THREE.BoxGeometry(.05,.14,.24),0xffffdd,-2.22,.62,.72);
+  mk2(car,new THREE.BoxGeometry(.05,.14,.24),0xffaa22,-2.22,.62,-.72);
+  mk2(car,new THREE.BoxGeometry(.05,.22,1.66),0x222222,-2.22,.52,0);
+  // Feux arrière
+  mk2(car,new THREE.BoxGeometry(.05,.15,.22),0xcc2200,2.22,.62,.72);
+  mk2(car,new THREE.BoxGeometry(.05,.15,.22),0xcc2200,2.22,.62,-.72);
+  // Pare-chocs
+  mk2(car,new THREE.BoxGeometry(.1,.18,1.86),0x333333,-2.24,.28,0);
+  mk2(car,new THREE.BoxGeometry(.1,.18,1.82),0x333333,2.24,.28,0);
+  // Plaques
+  mk2(car,new THREE.BoxGeometry(.04,.11,.52),0xffffff,-2.24,.22,0);
+  mk2(car,new THREE.BoxGeometry(.04,.11,.52),0xffffff,2.24,.22,0);
+  // Rétroviseur droit intact
+  mk2(car,new THREE.BoxGeometry(.13,.09,.04),0x222222,-.72,1.18,.96);
+  // Rétro gauche arraché
+  addR(new THREE.BoxGeometry(.11,.06,.03),0x222222,1.4,.02,-.5);
+
+  // Roues
+  function carWheel(cx,cz){
+    var t=mk(new THREE.CylinderGeometry(.29,.29,.17,16),0x1a1a1a);
+    t.rotation.x=Math.PI/2;t.position.x=cx;t.position.y=.29;t.position.z=cz;car.add(t);
+    var r=mk(new THREE.CylinderGeometry(.17,.17,.18,10),0x888888);
+    r.rotation.x=Math.PI/2;r.position.x=cx;r.position.y=.29;r.position.z=cz;car.add(r);
+    var h=mk(new THREE.CylinderGeometry(.06,.06,.19,5),0x666666);
+    h.rotation.x=Math.PI/2;h.position.x=cx;h.position.y=.29;h.position.z=cz;car.add(h);
+  }
+  carWheel(-1.32,.96);carWheel(-1.32,-.96);
+  carWheel(1.32,.96);carWheel(1.32,-.96);
+
+  car.rotation.y=Math.PI;
   car.position.x=0;car.position.z=-1.6;
   S.add(car);roomObjs.push(car);
 
-  // ═══ DÉBRIS SUR LA ROUTE ═══
-  addR(new THREE.BoxGeometry(.3,.02,.12),0x2244aa,3,.01,-1.2);
-  addR(new THREE.BoxGeometry(.18,.015,.08),0x2244aa,2.5,.01,-.6);
-  // Éclats de verre
+  // ═══ DÉBRIS ═══
+  addR(new THREE.BoxGeometry(.28,.02,.12),0x1e3a8a,3,.01,-1.2);
+  addR(new THREE.BoxGeometry(.16,.015,.08),0x1e3a8a,2.5,.01,-.6);
   for(var gi=0;gi<8;gi++){
-    var gx=2+Math.random()*2,gz=-3+Math.random()*2.5,gs=.02+Math.random()*.06;
+    var gx=1.5+Math.random()*2.5,gz=-3+Math.random()*2.5,gs=.02+Math.random()*.06;
     var gm=addR(new THREE.BoxGeometry(gs,.003,gs),0xaaccdd,gx,.015,gz);
     gm.material=new THREE.MeshLambertMaterial({color:0xaaccdd,transparent:true,opacity:0.5});
   }
-  // Sang sur la route
   addR(new THREE.BoxGeometry(.45,.005,.35),0x660000,1.8,.01,-1);
   addR(new THREE.BoxGeometry(.18,.005,.22),0x550000,2.2,.01,-1.8);
   addR(new THREE.BoxGeometry(.1,.005,.12),0x660000,1.2,.01,-2.2);
-  // Traces de freinage
   addR(new THREE.BoxGeometry(.1,.003,5.5),0x1a1a1a,-.5,.01,2);
   addR(new THREE.BoxGeometry(.1,.003,4.8),0x1a1a1a,.5,.01,2.3);
+  for(var ci=0;ci<4;ci++){
+    addR(new THREE.CylinderGeometry(0,.12,.45,6),0xff6600,-3+ci*1.5,.225,3.5);
+    addR(new THREE.CylinderGeometry(.14,.14,.04,6),0xff6600,-3+ci*1.5,.02,3.5);
+  }
 }
 function buildScene_OAP(){
   addR(new THREE.PlaneGeometry(12,10),0x1a1510,0,0,0,-Math.PI/2);
@@ -760,117 +767,89 @@ secs.forEach(function(s,i){s.position.x=i*1.5-1.5;s.position.y=.85;s.position.z=
 var FFT_L=[[[1.5,2],[0,2.2],[-1.5,2.5]],[[.6,.8],[-.4,.8],[-.7,1.5]],[[.65,0],[-.55,0],[.1,-.7]],[[.65,0],[-.55,0],[.1,-.7]],[[.65,0],[-.55,0],[.1,-.7]],[[-1,.5],[-.4,.4],[.8,.5]]];
 var FFT_S=[[[1.5,2],[0,2.2],[-1.5,2.5]],[[.6,-.4],[-.5,-.4],[-.8,.2]],[[.85,-1.5],[-.85,-1.5],[0,-2.5]],[[.85,-1.5],[-.85,-1.5],[0,-2.5]],[[.85,-1.5],[-.85,-1.5],[0,-2.5]],[[-1,.5],[-.4,.4],[.8,.5]]];
 
-/* VSAV simple et propre */
+/* ========== VSAV MERCEDES SPRINTER ========== */
 var vsavG=new THREE.Group();
-
-function addToV(geo,col,x,y,z){var m=mk(geo,col);m.position.x=x;m.position.y=y;m.position.z=z;vsavG.add(m);return m;}
-
-// Chassis underplate
-addToV(new THREE.BoxGeometry(5.8,0.12,2.0),0x222222,  0, 0.18, 0);
-
-// CAB SECTION (front, lower) — x: +0.7 to +2.9, height up to y≈2.1
-addToV(new THREE.BoxGeometry(2.2,1.95,2.0),0xddddee,  1.8, 1.15, 0);
-
-// MEDICAL CELL (rear, higher) — x: -2.9 to +0.7, height up to y≈2.58
-addToV(new THREE.BoxGeometry(3.6,2.4,2.0),0xddddee,  -1.1, 1.38, 0);
-
-// Transition step between cab and cell (fills height gap at x≈0.7)
-addToV(new THREE.BoxGeometry(0.25,2.2,2.0),0xddddee,  0.7, 1.22, 0);
-
-// Cab roof (flat)
-addToV(new THREE.BoxGeometry(2.2,0.06,1.95),0xccccdd,  1.8, 2.15, 0);
-
-// Cell roof
-addToV(new THREE.BoxGeometry(3.85,0.06,1.95),0xccccdd,  -0.95, 2.6, 0);
-
-// Red stripe along lower body — full length, sits at door-sill height
-addToV(new THREE.BoxGeometry(5.82,0.28,2.02),0xcc1100,  0, 0.74, 0);
-
-// Front windshield — thin in X, spans full cab width in Z, raked back
-var vwb = addToV(new THREE.BoxGeometry(0.06,0.82,1.75),0x88aacc,  2.87, 1.68, 0);
-vwb.material = new THREE.MeshLambertMaterial({color:0x88aacc,transparent:true,opacity:0.4});
-vwb.rotation.z = -0.22; // rake back ~13°
-
-// Cab side windows (both sides, ±z=1.01)
-var vcw1=addToV(new THREE.BoxGeometry(0.55,0.5,0.04),0x778899,  2.15, 1.75, 1.01);
+function addToV(geo,col,x,y,z){var m=mk(geo,col);m.position.set(x,y,z);vsavG.add(m);return m;}
+function addWheelV(x,z){
+  var t=mk(new THREE.CylinderGeometry(.36,.36,.2,18),0x1a1a1a);
+  t.rotation.x=Math.PI/2;t.position.set(x,.36,z);vsavG.add(t);
+  var r=mk(new THREE.CylinderGeometry(.21,.21,.21,12),0x888888);
+  r.rotation.x=Math.PI/2;r.position.set(x,.36,z);vsavG.add(r);
+  var h=mk(new THREE.CylinderGeometry(.07,.07,.22,6),0x666666);
+  h.rotation.x=Math.PI/2;h.position.set(x,.36,z);vsavG.add(h);
+}
+// Soubassement / bas de caisse (pleine longueur, sol → y=0.5)
+addToV(new THREE.BoxGeometry(5.8,.5,1.92),0xddddee,0,.25,0);
+// Cabine (avant, x=0.7→2.9, y=0.5→2.15)
+addToV(new THREE.BoxGeometry(2.2,1.65,2.0),0xddddee,1.8,1.325,0);
+// Cellule médicale (arrière, x=-2.9→0.7, y=0.5→2.65)
+addToV(new THREE.BoxGeometry(3.6,2.15,2.0),0xddddee,-1.1,1.575,0);
+// Contremarche cabine/cellule (décrochement de hauteur à x=0.7)
+addToV(new THREE.BoxGeometry(.07,.5,2.0),0xccccdd,0.7,2.4,0);
+// Toit cabine
+addToV(new THREE.BoxGeometry(2.2,.07,2.0),0xbbbbcc,1.8,2.185,0);
+// Toit cellule
+addToV(new THREE.BoxGeometry(3.6,.07,2.0),0xccccdd,-1.1,2.685,0);
+// Bande rouge (pleine longueur, bas de caisse)
+addToV(new THREE.BoxGeometry(5.82,.3,2.02),0xcc1100,0,.65,0);
+// Pare-brise avant — rotation.z=+0.2 → sommet vers -X (incliné vers l'arrière ✓)
+var vwb=addToV(new THREE.BoxGeometry(.05,.88,1.74),0x88aacc,2.87,1.68,0);
+vwb.material=new THREE.MeshLambertMaterial({color:0x88aacc,transparent:true,opacity:0.42});
+vwb.rotation.z=.2;
+// Vitres latérales cabine (±z=1.01)
+var vcw1=addToV(new THREE.BoxGeometry(.55,.5,.04),0x778899,2.15,1.75,1.01);
 vcw1.material=new THREE.MeshLambertMaterial({color:0x778899,transparent:true,opacity:0.4});
-var vcw2=addToV(new THREE.BoxGeometry(0.55,0.5,0.04),0x778899,  1.3,  1.75, 1.01);
+var vcw2=addToV(new THREE.BoxGeometry(.55,.5,.04),0x778899,1.3,1.75,1.01);
 vcw2.material=new THREE.MeshLambertMaterial({color:0x778899,transparent:true,opacity:0.4});
-// Mirror on -z side
-var vcw3=addToV(new THREE.BoxGeometry(0.55,0.5,0.04),0x778899,  2.15, 1.75,-1.01);
+var vcw3=addToV(new THREE.BoxGeometry(.55,.5,.04),0x778899,2.15,1.75,-1.01);
 vcw3.material=new THREE.MeshLambertMaterial({color:0x778899,transparent:true,opacity:0.4});
-var vcw4=addToV(new THREE.BoxGeometry(0.55,0.5,0.04),0x778899,  1.3,  1.75,-1.01);
+var vcw4=addToV(new THREE.BoxGeometry(.55,.5,.04),0x778899,1.3,1.75,-1.01);
 vcw4.material=new THREE.MeshLambertMaterial({color:0x778899,transparent:true,opacity:0.4});
-
-// Cell side windows (small square, both sides)
-var vcw5=addToV(new THREE.BoxGeometry(0.45,0.38,0.04),0x778899,  0.1, 2.05, 1.01);
+// Vitres latérales cellule
+var vcw5=addToV(new THREE.BoxGeometry(.45,.38,.04),0x778899,.1,2.05,1.01);
 vcw5.material=new THREE.MeshLambertMaterial({color:0x778899,transparent:true,opacity:0.35});
-var vcw6=addToV(new THREE.BoxGeometry(0.45,0.38,0.04),0x778899, -1.1, 2.05, 1.01);
+var vcw6=addToV(new THREE.BoxGeometry(.45,.38,.04),0x778899,-1.1,2.05,1.01);
 vcw6.material=new THREE.MeshLambertMaterial({color:0x778899,transparent:true,opacity:0.35});
-var vcw7=addToV(new THREE.BoxGeometry(0.45,0.38,0.04),0x778899,  0.1, 2.05,-1.01);
+var vcw7=addToV(new THREE.BoxGeometry(.45,.38,.04),0x778899,.1,2.05,-1.01);
 vcw7.material=new THREE.MeshLambertMaterial({color:0x778899,transparent:true,opacity:0.35});
-var vcw8=addToV(new THREE.BoxGeometry(0.45,0.38,0.04),0x778899, -1.1, 2.05,-1.01);
+var vcw8=addToV(new THREE.BoxGeometry(.45,.38,.04),0x778899,-1.1,2.05,-1.01);
 vcw8.material=new THREE.MeshLambertMaterial({color:0x778899,transparent:true,opacity:0.35});
-
-// Sliding side door outline on left side (z=-1.01) of cell
-addToV(new THREE.BoxGeometry(1.1,1.6,0.03),0xccccdd, -0.5, 1.5, -1.01);
-addToV(new THREE.BoxGeometry(1.12,0.03,0.03),0x555555, -0.5, 2.32,-1.01); // top rail
-addToV(new THREE.BoxGeometry(1.12,0.03,0.03),0x555555, -0.5, 0.72,-1.01); // bottom rail
-
-// Rear double doors (two panels on the x=-2.9 face)
-addToV(new THREE.BoxGeometry(0.05,2.2,0.96),0xccccdd, -2.9, 1.38, 0.49);
-addToV(new THREE.BoxGeometry(0.05,2.2,0.96),0xddddee, -2.9, 1.38,-0.49);
-addToV(new THREE.BoxGeometry(0.05,2.22,0.03),0x444444, -2.9, 1.38,  0  ); // center joint
-// Door handles
-addToV(new THREE.BoxGeometry(0.06,0.04,0.12),0xaaaaaa, -2.92,1.4, 0.12);
-addToV(new THREE.BoxGeometry(0.06,0.04,0.12),0xaaaaaa, -2.92,1.4,-0.12);
-// Rear step
-addToV(new THREE.BoxGeometry(0.12,0.08,1.85),0x333333, -2.88,0.22, 0);
-
-// Headlights (front face, both sides)
-addToV(new THREE.BoxGeometry(0.05,0.2,0.3),0xffffcc, 2.92, 0.82, 0.7);
-addToV(new THREE.BoxGeometry(0.05,0.2,0.3),0xffffcc, 2.92, 0.82,-0.7);
-// Front grille
-addToV(new THREE.BoxGeometry(0.05,0.3,1.6),0x333333, 2.92, 0.52, 0);
-// Front bumper
-addToV(new THREE.BoxGeometry(0.1,0.22,2.02),0x444444, 2.94, 0.3, 0);
-// Front tow hook / skid plate
-addToV(new THREE.BoxGeometry(0.08,0.1,0.5),0x333333, 2.94, 0.15, 0);
-
-// Rear lights
-addToV(new THREE.BoxGeometry(0.05,0.18,0.22),0xcc0000, -2.92, 0.82, 0.82);
-addToV(new THREE.BoxGeometry(0.05,0.18,0.22),0xcc0000, -2.92, 0.82,-0.82);
-addToV(new THREE.BoxGeometry(0.05,0.1,0.16),0xffffff,  -2.92, 0.82, 0.58); // reverse
-// Rear bumper
-addToV(new THREE.BoxGeometry(0.1,0.22,2.02),0x444444, -2.94, 0.3, 0);
-
-// Side mirrors (cab, both sides)
-addToV(new THREE.BoxGeometry(0.12,0.09,0.05),0x333333, 2.5, 1.82, 1.04);
-addToV(new THREE.BoxGeometry(0.12,0.09,0.05),0x333333, 2.5, 1.82,-1.04);
-
-// Blue LED light bar on cab roof (spans cab width)
-var vg1=addToV(new THREE.BoxGeometry(1.8,0.1,0.28),0x2255ff, 1.8, 2.22, 0);
+// Porte coulissante (z=-1.01, côté gauche)
+addToV(new THREE.BoxGeometry(1.1,1.6,.03),0xccccdd,-.5,1.5,-1.01);
+addToV(new THREE.BoxGeometry(1.12,.03,.03),0x555555,-.5,2.32,-1.01);
+addToV(new THREE.BoxGeometry(1.12,.03,.03),0x555555,-.5,.72,-1.01);
+// Portes arrière (double vantail)
+addToV(new THREE.BoxGeometry(.05,2.2,.96),0xccccdd,-2.9,1.38,.49);
+addToV(new THREE.BoxGeometry(.05,2.2,.96),0xddddee,-2.9,1.38,-.49);
+addToV(new THREE.BoxGeometry(.05,2.22,.03),0x444444,-2.9,1.38,0);
+addToV(new THREE.BoxGeometry(.06,.04,.12),0xaaaaaa,-2.92,1.4,.12);
+addToV(new THREE.BoxGeometry(.06,.04,.12),0xaaaaaa,-2.92,1.4,-.12);
+addToV(new THREE.BoxGeometry(.12,.08,1.85),0x333333,-2.88,.22,0);
+// Phares avant
+addToV(new THREE.BoxGeometry(.05,.22,.32),0xffffcc,2.92,.85,.72);
+addToV(new THREE.BoxGeometry(.05,.22,.32),0xffffcc,2.92,.85,-.72);
+addToV(new THREE.BoxGeometry(.05,.28,1.6),0x333333,2.92,.52,0);
+addToV(new THREE.BoxGeometry(.1,.22,2.02),0x444444,2.94,.3,0);
+// Feux arrière
+addToV(new THREE.BoxGeometry(.05,.2,.24),0xcc0000,-2.92,.85,.82);
+addToV(new THREE.BoxGeometry(.05,.2,.24),0xcc0000,-2.92,.85,-.82);
+addToV(new THREE.BoxGeometry(.1,.22,2.02),0x444444,-2.94,.3,0);
+// Rétroviseurs cabine
+addToV(new THREE.BoxGeometry(.12,.09,.05),0x333333,2.5,1.82,1.04);
+addToV(new THREE.BoxGeometry(.12,.09,.05),0x333333,2.5,1.82,-1.04);
+// Gyrophare (rampe bleue, toit cabine)
+var vg1=addToV(new THREE.BoxGeometry(1.9,.1,.28),0x2255ff,1.8,2.26,0);
 vg1.material=new THREE.MeshLambertMaterial({color:0x2255ff,emissive:new THREE.Color(0x1133aa)});
-// Secondary gyrophare on cell roof (near front of cell)
-var vg2=addToV(new THREE.BoxGeometry(0.9,0.08,0.22),0x2255ff, 0.3, 2.67, 0);
+// Gyrophare secondaire (toit cellule)
+var vg2=addToV(new THREE.BoxGeometry(.82,.08,.22),0x2255ff,.2,2.74,0);
 vg2.material=new THREE.MeshLambertMaterial({color:0x2255ff,emissive:new THREE.Color(0x001166)});
 vsavG.userData.flash1=vg1;vsavG.userData.flash2=vg2;
-
-// SDMIS cross-of-life on cell side
-addToV(new THREE.BoxGeometry(0.04,0.22,0.03),0x2255ff, -1.5, 1.9, 1.02);
-addToV(new THREE.BoxGeometry(0.04,0.03,0.22),0x2255ff, -1.5, 1.9, 1.02);
-
-// Wheels — CylinderGeometry axis along Z after rotation.x=PI/2
-function addWheelV(x,z){
-  var tire=mk(new THREE.CylinderGeometry(.38,.38,.19,18),0x1a1a1a);
-  tire.rotation.x=Math.PI/2;tire.position.x=x;tire.position.y=.38;tire.position.z=z;vsavG.add(tire);
-  var rim=mk(new THREE.CylinderGeometry(.22,.22,.2,12),0x999999);
-  rim.rotation.x=Math.PI/2;rim.position.x=x;rim.position.y=.38;rim.position.z=z;vsavG.add(rim);
-  var hub=mk(new THREE.CylinderGeometry(.07,.07,.21,6),0x777777);
-  hub.rotation.x=Math.PI/2;hub.position.x=x;hub.position.y=.38;hub.position.z=z;vsavG.add(hub);
-}
-addWheelV(1.7, 1.06); addWheelV(1.7,-1.06);
-addWheelV(-1.5, 1.06); addWheelV(-1.5,-1.06);
+// Croix de vie SDMIS (cellule, côté gauche)
+addToV(new THREE.BoxGeometry(.04,.22,.03),0x2255ff,-1.5,1.9,1.02);
+addToV(new THREE.BoxGeometry(.04,.03,.22),0x2255ff,-1.5,1.9,1.02);
+// Roues (essieu avant x=1.8, arrière x=-1.8)
+addWheelV(1.8,1.06);addWheelV(1.8,-1.06);
+addWheelV(-1.8,1.06);addWheelV(-1.8,-1.06);
 
 vsavG.position.x=8;vsavG.rotation.y=-Math.PI/2;S.add(vsavG);
 
