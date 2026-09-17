@@ -1,43 +1,45 @@
-# SDMIS — Simulateur d'intervention VSAV
+# SDMIS — Ambulance Call Simulator
 
-Simulateur 3D d'interventions de secours à personne, conçu pour réviser les protocoles de la formation sapeur-pompier.
+3D simulator of emergency medical calls, built to practice the first-aid protocols taught in French firefighter training.
 
-**[Lancer le simulateur →](https://sacha9214.github.io/sdmis-sim/)**
+**[Launch the simulator →](https://sacha9214.github.io/sdmis-sim/)**
 
-![Sélection du cas clinique](docs/apercu.png)
+![Clinical case selection](docs/apercu.png)
 
-## Cas cliniques
+## Clinical cases
 
-| Cas | Priorité | Situation |
+| Case | Priority | Scenario |
 |---|---|---|
-| Arrêt cardiaque | Rouge | ACR chez un adulte de 58 ans : RCP, défibrillation, RACS |
-| Traumatisme grave | Rouge P1 | Chute de 6 m : garrot, rachis, conditionnement |
-| AVP incarcéré | Orange P2 | Conducteur incarcéré, volet thoracique |
-| Détresse respiratoire | Orange P2 | OAP chez une femme de 72 ans : VNI, furosémide |
+| Cardiac arrest | Red | 58-year-old adult in cardiac arrest: CPR, defibrillation, return of spontaneous circulation |
+| Major trauma | Red P1 | 6 m fall: tourniquet, spinal immobilization, packaging |
+| Road traffic collision | Orange P2 | Trapped driver, flail chest |
+| Respiratory distress | Orange P2 | Acute pulmonary edema in a 72-year-old woman: non-invasive ventilation, furosemide |
 
-## Fonctionnalités
+## Features
 
-- **Scène 3D** : VSAV avec gyrophares, secouristes et victime animés, signes cliniques visibles sur la peau (cyanose, pâleur, marbrures, sueurs)
-- **Bilan MARCH** : hémorragie massive, voies aériennes, respiration, circulation, hypothermie
-- **Constantes vitales en direct** : FC, SpO2, PA, FR, glycémie, température, avec seuils d'alerte
-- **Déroulé en 6 phases** par intervention, avec journal des événements
-- **Vitesse réglable** (×0,5, ×1, ×2) et commandes tactiles (rotation à un doigt, zoom à deux doigts)
+- **3D scene**: ambulance with flashing lights, animated rescuers and patient, clinical signs visible on the skin (cyanosis, pallor, mottling, sweating)
+- **MARCH assessment**: massive hemorrhage, airway, respiration, circulation, hypothermia
+- **Live vital signs**: heart rate, SpO2, blood pressure, respiratory rate, blood glucose, temperature, with alert thresholds
+- **6-phase scenario** per call, with an event log
+- **Adjustable speed** (×0.5, ×1, ×2) and touch controls (one-finger orbit, two-finger zoom)
+
+The interface is in French.
 
 ## Stack
 
-Un seul fichier `index.html` : HTML, CSS et JavaScript, rendu 3D avec [Three.js](https://threejs.org/) r134. Aucun build, aucune dépendance à installer.
+A single `index.html` file: HTML, CSS and JavaScript, with 3D rendering by [Three.js](https://threejs.org/) r134. No build step, nothing to install.
 
-## Lancer en local
+## Run locally
 
 ```bash
 python3 -m http.server 8000
-# puis ouvrir http://localhost:8000
+# then open http://localhost:8000
 ```
 
-## Avertissement
+## Disclaimer
 
-Projet personnel de révision, sans lien officiel avec le SDMIS. Il ne remplace ni la formation ni les référentiels en vigueur.
+Personal study project, not affiliated with the SDMIS (Rhône fire and rescue service). It does not replace official training or protocols.
 
-## Licence
+## License
 
 [MIT](LICENSE)
